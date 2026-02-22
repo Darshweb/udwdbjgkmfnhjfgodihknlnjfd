@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Darsh Web Developers</title>
+    <style>
+        /* --- OFFERS STYLING --- */
+        .offer-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--orange-main);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            border: none;
+        }
+
+        /* Initial Slide Up Animation */
+        @keyframes floatUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Continuous Floating (Bobbing) Animation */
+        @keyframes bobbing {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .offer-popup {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background: #1a1a1a;
+            border: 2px solid var(--orange-main);
+            padding: 20px;
+            border-radius: 15px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: floatUp 0.4s ease-out, bobbing 3s ease-in-out infinite;
+        }
+
+        .offer-popup h3 { color: var(--orange-main); margin-top: 0; }
+        .offer-popup p { font-size: 0.9rem; line-height: 1.4; }
+
+        /* --- CSS STYLING (The Look) --- */
+        :root {
+            --primary: #00e5ff; /* Cyan */
+            --secondary: #2979ff; /* Blue */
+            --orange-main: #ff9100; /* Orange for Founder */
+            --bg-dark: #0a0e17; /* Dark BG */
+            --glass: rgba(255, 255, 255, 0.05);
+            --text-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 50%, #1a237e 0%, #000000 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Helpers */
+        .hidden { display: none !important; }
+        
+        .btn {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 0 15px var(--primary); }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover { background: rgba(0, 229, 255, 0.1); }
+
+        /* Navigation / Header */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 50px;
+            border-radius: 8px; 
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+        }
+
+        .nav-right { margin-left: auto; }
+        .nav-right button { width: auto; } 
+
+        /* --- AUTH SECTION (Centered) --- */
+        #auth-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;    
+            flex-grow: 1;
+            width: 100%;
+            min-height: 80vh; 
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 380px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary), transparent);
+            z-index: -1;
+            border-radius: 20px;
+            opacity: 0.5;
+        }
+
+        .auth-container h2 { margin-bottom: 25px; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
+        
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(0, 229, 255, 0.3); }
+
+        .switch-link {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #aaa;
+            cursor: pointer;
+        }
+        .switch-link:hover { color: var(--primary); text-decoration: underline; }
+
+        .agree-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #ccc;
+            text-align: left;
+        }
+        .agree-container input { width: 18px; height: 18px; margin: 0; cursor: pointer; }
+        .agree-link { color: var(--primary); text-decoration: underline; cursor: pointer; font-weight: bold; }
+
+        /* Plan Selection Section */
+        .plans-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .plan-card {
+            background: var(--glass);
+            border: 1px solid var(--primary);
+            padding: 20px;
+            border-radius: 10px;
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+            position: relative;
+        }
+        .plan-card:hover { transform: translateY(-5px); background: rgba(0, 229, 255, 0.1); box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); }
+        
+        .plan-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 5px; text-align: center; font-weight: bold;}
+        .plan-price { font-size: 2rem; font-weight: bold; margin-bottom: 15px; text-align: center; }
+        
+        .plan-features {
+            text-align: left;
+            padding: 0;
+            list-style: none;
+            margin-bottom: 20px;
+            flex-grow: 1; 
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .plan-features li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 5px 0;
+        }
+
+        /* --- LARGE LEGAL CONTENT STYLING --- */
+        .legal-content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            line-height: 1.8;
+            text-align: left;
+            font-size: 1.15rem; /* Bigger Text */
+        }
+        .legal-content h1 { color: var(--primary); font-size: 2.5rem; border-bottom: 2px solid var(--secondary); padding-bottom: 10px; }
+        .legal-content h3 { color: var(--primary); font-size: 1.6rem; margin-top: 35px; margin-bottom: 10px; text-transform: uppercase; }
+        .legal-content p, .legal-content li { color: #e0e0e0; margin-bottom: 15px; }
+        .legal-content ul { padding-left: 20px; }
+        .legal-content strong { color: var(--primary); }
+
+        /* --- NEW FOUNDER SECTION STYLING (Orange Theme) --- */
+        .founder-theme {
+            border-color: var(--orange-main) !important;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(40, 20, 10, 0.8));
+            box-shadow: 0 0 50px rgba(255, 145, 0, 0.2);
+        }
+        
+        .founder-theme h1, 
+        .founder-theme h2, 
+        .founder-theme h3, 
+        .founder-theme strong {
+            color: var(--orange-main) !important;
+            border-bottom-color: var(--orange-main) !important;
+        }
+
+        .founder-theme .btn-outline {
+            border-color: var(--orange-main);
+            color: var(--orange-main);
+        }
+        .founder-theme .btn-outline:hover {
+            background: rgba(255, 145, 0, 0.15);
+        }
+
+        .founder-link {
+            cursor: pointer; 
+            text-decoration: underline; 
+            font-weight: bold; 
+            color: var(--orange-main);
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+        .founder-link:hover { text-shadow: 0 0 10px var(--orange-main); }
+
+        /* --- AI CHATBOT STYLING --- */
+        #chat-widget {
+            position: fixed;
+            bottom: 70px;
+            left: 10px;
+            width: 300px;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+        #chat-header {
+            background: #3fe0e8;
+            color: white;
+            padding: 12px;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+        #chat-body {
+            background: #353538;
+            border: 1px solid var(--secondary);
+            border-top: none;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0 0 10px 10px;
+        }
+        #chat-content {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .msg { padding: 8px 12px; border-radius: 8px; font-size: 14px; max-width: 80%; word-wrap: break-word; }
+        .bot-msg { background: rgba(255,255,255,0.03); color: var(--primary); align-self: flex-start; border-left: 3px solid var(--primary); }
+        .user-msg { background: rgba(255,173,0,0.03); color: var(--orange-main); align-self: flex-end; text-align: right; }
+        .thinking { opacity: 0.9; font-style: italic; display: flex; align-items: center; gap: 8px; }
+        .thinking .dot { display:inline-block; font-weight: bold; letter-spacing: 2px; min-width: 20px; }
+        #chat-input-box {
+            display: flex;
+            border-top: 1px solid #f0ae43;
+            padding: 5px;
+        }
+        #chat-input-box input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 8px;
+            outline: none;
+        }
+        #chat-input-box button {
+            background: var(--primary);
+            border: none;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: rgb(0, 0, 0);
+        }
+
+        /* --- DYNAMIC ISLAND ALERT STYLING --- */
+        #custom-alert {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 99999;
+            pointer-events: none;
+        }
+
+        .dynamic-island {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border: 2px solid transparent;
+            border-radius: 30px;
+            padding: 12px 24px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform-origin: center;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.5) translateY(-50px);
+        }
+
+        .dynamic-island.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .dynamic-island.error {
+            border-color: #ff3b30;
+            box-shadow: 0 0 20px rgba(255, 59, 48, 0.2);
+        }
+
+        .dynamic-island.success {
+            border-color: #34c759;
+            box-shadow: 0 0 20px rgba(52, 199, 89, 0.2);
+        }
+
+        .dynamic-island p {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Responsive Mobile Alert Position */
+        @media (max-width: 600px) {
+            #custom-alert {
+                right: 50%;
+                transform: translateX(50%);
+                width: 90%;
+            }
+            .dynamic-island {
+                min-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="custom-alert">
+        <div id="island-box" class="dynamic-island">
+            <p id="island-msg"></p>
+        </div>
+    </div>
+
+    <header id="main-header" class="hidden">
+        <div class="logo-container">
+            <img src="1767803896780.jpg" alt="Logo" class="logo-img"> 
+            <div class="brand-name">Darsh Web Developers</div>
+        </div>
+        <div class="nav-right">
+            <span id="user-display" style="margin-right: 15px; color: #ccc;"></span>
+            <button class="btn" onclick="logout()" style="width: auto; margin-top:0;">Log Out</button>
+        </div>
+    </header>
+
+    <div id="auth-section">
+        <div id="login-form" class="auth-container">
+            <h2>Darsh Web Developers</h2>
+            <input type="email" id="login-email" placeholder="Gmail Address">
+            <input type="password" id="login-pass" placeholder="Password">
+            <button class="btn" onclick="handleLogin()">Log In</button>
+            <div class="switch-link" onclick="toggleAuth('register')">New here? Create Account</div>
+            
+            <div style="margin-top: 25px;">
+                <span class="founder-link" style="margin:0; font-size: 0.9rem;" onclick="showFounder()"></span>
+            </div>
+        </div>
+
+        <div id="register-form" class="auth-container hidden">
+            <h2>Join Us</h2>
+            <p style="font-size: 0.8rem; color: #ccc; margin-bottom: 20px;">Bring your digital dreams to life</p>
+            <input type="email" id="reg-email" placeholder="Enter Gmail Address">
+            <input type="password" id="reg-pass" placeholder="Create Password">
+            
+            <div class="agree-container">
+                <input type="checkbox" id="agree-check">
+                <label for="agree-check">I Agree to the <span class="agree-link" onclick="showPolicy()">Terms & Policy</span></label>
+            </div>
+
+            <button class="btn" onclick="handleRegister()">Sign Up</button>
+            <div class="switch-link" onclick="toggleAuth('login')">Have an account? Log In</div>
+        </div>
+    </div>
+
+    <div id="plans-section" class="hidden">
+        <div style="text-align: center; margin-top: 30px;">
+            <h1>Select Your Package</h1>
+            <p>Darsh Web Developers - Premium Services</p>
+        </div>
+        
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div class="plan-title">Free Trial</div>
+                <div class="plan-price">₹0</div>
+                <ul class="plan-features">
+                    <li>SSL Certificate ✅</li>
+                    <li>5 days Hosting ✅</li>
+                    <li>GitHub Domain ✅</li>
+                    <li>Functional ✅</li>
+                    <li>Website in 2 days ✅</li>
+                </ul>
+                <button class="btn" onclick="selectPlan('Free Trial (₹0)')">Select Trial</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-title">Basic</div>
+                <div class="plan-price">₹5,099</div>
+                <ul class="plan-features">
+                    <li>SSL Certificate ✅</li>
+                    <li>3 Months Hosting ✅</li>
+                    <li>GitHub Domain ✅</li>
+                    <li>Functional ✅</li>
+                    <li>Maintenance ✅</li>
+                    <li>Free Bug fixes ✅</li>
+                    <li>Updates ✅</li>
+                    <li>Website in 2 days ✅</li>
+                    <li>Customer Support ✅</li>
+                </ul>
+                <button class="btn" onclick="selectPlan('Basic (₹5,099)')">Select Basic</button>
+            </div>
+
+            <div class="plan-card" style="border-color: var(--secondary);">
+                <div class="plan-title">Advanced</div>
+                <div class="plan-price">₹8,499</div>
+                <ul class="plan-features">
+                    <li>SSL Certificate ✅</li>
+                    <li>6 Month Hosting ✅</li>
+                    <li>GitHub Domain ✅</li>
+                    <li>Functional ✅</li>
+                    <li>Maintenance ✅</li>
+                    <li>Free Bug fixes ✅</li>
+                    <li>Updates ✅</li>
+                    <li>Website in 2 days ✅</li>
+                    <li>Customer Support ✅</li>
+                </ul>
+                <button class="btn" onclick="selectPlan('Advanced (₹8,499)')">Select Advanced</button>
+            </div>
+
+            <div class="plan-card" style="box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);">
+                <div class="plan-title" style="text-shadow: 0 0 10px var(--primary);">Ultra</div>
+                <div class="plan-price">₹11,999</div>
+                <ul class="plan-features">
+                    <li>SSL Certificate ✅</li>
+                    <li>1 Year Hosting ✅</li>
+                    <li>GitHub Domain ✅</li>
+                    <li>Functional ✅</li>
+                    <li>Maintenance ✅</li>
+                    <li>Free Bug fixes ✅</li>
+                    <li>Updates ✅</li>
+                    <li>Website in 2 days ✅</li>
+                    <li>Customer Support ✅</li>
+                </ul>
+                <button class="btn" onclick="selectPlan('Ultra (₹11,999)')">Select Ultra</button>
+            </div>
+
+            <div class="plan-card" style="box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);">
+                <div class="plan-title" style="text-shadow: 0 0 10px var(--primary);">Diamond</div>
+                <div class="plan-price">₹24,999</div>
+                <ul class="plan-features">
+                    <li>SSL Certificate ✅</li>
+                    <li>3 Year Hosting ✅</li>
+                    <li>GitHub Domain ✅</li>
+                    <li>Functional ✅</li>
+                    <li>Maintenance ✅</li>
+                    <li>Free Bug fixes ✅</li>
+                    <li>Updates ✅</li>
+                    <li>Website in 2 days ✅</li>
+                    <li>Customer Support ✅</li>
+                </ul>
+                <button class="btn" onclick="selectPlan('Diamond (₹24,999)')">Select Diamond Plan</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-website" class="hidden" style="text-align: center; padding: 50px;">
+        <img src="1767803896780.jpg" style="width: 100px; margin-bottom: 20px; border-radius: 10px;">
+        <h1 style="color: var(--primary); font-size: 3rem;">Darsh Web Developers</h1>
+        <p style="font-size: 1.2rem;">Bringing Your Digital Dreams to Life.</p>
+        
+        <div style="margin-top: 40px; padding: 30px; border: 1px solid var(--secondary); display: inline-block; border-radius: 10px; background: rgba(0,0,0,0.3); max-width: 500px;">
+            <h3>Request Received</h3>
+            <p>Please contact on webdevelopersdarsh@gmail.com and type hi and tell which plan you have selected. We will contact you under 24 hours: <br><strong id="user-current-plan" style="color: var(--primary); font-size: 1.5em; display:block; margin-top:10px;">Loading...</strong></p>
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+            <button class="btn btn-outline" onclick="changePlan()">Choose Another Plan</button>
+        </div>
+    </div>
+
+    <div id="policy-section" class="hidden legal-content">
+         <h1>Terms of Service</h1>
+        
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing <strong>Darsh Web Developers</strong>, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our services.</p>
+
+        <h3>2. Service Delivery</h3>
+        <ul>
+            <li>We commit to delivering a functional website within <strong>2 business days</strong> of project confirmation.</li>
+            <li>Clients must provide all necessary images, text, and logos. Delays in providing content will extend the delivery timeline.</li>
+        </ul>
+
+        <h3>3. Payment & Pricing</h3>
+        <p>All prices displayed on our website are final and inclusive of listed discounts. Payments must be made as per the instruction provided via email communication.</p>
+
+        <h3>4. Intellectual Property</h3>
+        <p>Once the full payment is received, the ownership of the website code developed for you is transferred to you. However, <strong>Darsh Web Developers</strong> reserves the right to display the project in our portfolio.</p>
+
+        <h3>5. User Conduct</h3>
+        <p>You agree not to use our services for any illegal activities, including hosting malware, phishing content, or infringing on the copyrights of others.</p>
+
+	    <h3>6. Domain Using</h3>
+        <p>We don't use old domains.</p>
+        <p>Instead we use new domains which you like.</p>
+        <p>Note : We Only use Github Domains.</p>
+
+        <h1 style="margin-top: 60px;">Privacy Policy</h1>
+        
+        <h3>1. Information We Collect</h3>
+        <p>Your email is used exclusively to contact you regarding your website project. We <strong>never</strong> sell or share your email address with third-party marketing companies.</p>
+
+        <h3>2. How We Use Data</h3>
+        <p>We only collect your <strong>Gmail Address</strong> and your <strong>Selected Service Plan</strong>. We do not track your location, browsing history, or personal identity beyond what is required for communication.</p>
+
+        <h3>3. Security Measures</h3>
+        <p>We implement industry-standard security protocols to protect your data. However, as no method of transmission over the internet is 100% secure, we cannot guarantee absolute security.</p>
+
+        <h3>4. Cookies</h3>
+        <p>This website uses local storage to maintain your login session. No tracking cookies are used for advertising purposes.</p>
+        <button class="btn btn-outline" style="margin-top: 40px;" onclick="closePolicy()">I Have Read & Understood - Close</button>
+    </div>
+
+    <div id="founder-section" class="hidden legal-content founder-theme">
+        <h1 style="border-bottom-color: var(--orange-main);">About the Founder</h1>
+        
+        <div style="margin-bottom:30px;">
+            <h2 style="margin:0; font-size: 2.2rem; color: var(--orange-main);">Darsh Korale</h2>
+            <p style="margin:0; opacity:0.8; font-size:1.2rem; color: #ffcc80;">Founder & Lead Developer</p>
+        </div>
+
+        <h3>The Vision</h3>
+        <p><strong>Darsh Korale</strong> is a entrepreneur and tech prodigy. While most of his peers are consuming digital content, Darsh is busy creating it.</p>
+        
+        <p>As a specialist in web development, he identifies the critical flaws that hold businesses back—like slow load times and "trash" mobile layouts—and transforms them into high-performance digital assets. He combines the fresh perspective of the next generation with a deep technical understanding of modern web standards.</p>
+
+        <p>Darsh is on a mission to prove that age is no barrier to excellence. He provides business owners with the speed, creativity, and technical edge they need to compete in 2026.</p>
+
+        <h3>Why Work With Darsh?</h3>
+        <ul>
+            <li><strong>Speed:</strong> He builds sites optimized for 2026 standards.</li>
+            <li><strong>Innovation:</strong> A Alpha perspective on what actually looks good.</li>
+            <li><strong>Dedication:</strong> 100% focused on getting results for his clients.</li>
+        </ul>
+
+        <button class="btn btn-outline" style="margin-top: 40px; font-size: 1.2rem; padding: 15px;" onclick="closeFounder()">Back to Site</button>
+    </div>
+
+
+    <footer style="background:#5f8ff5;color:#fff;padding:40px 10px;text-align:center;">
+        <h2>Darsh Web Developers</h2>
+        <p>✉️ webdevelopersdarsh@gmail.com</p>
+        <div style="margin-top: 15px;">
+         <span style="cursor:pointer; text-decoration: underline; font-weight: bold;" onclick="showPolicy()">Terms of Service & Privacy Policy</span>
+            <span class="founder-link" style="color: #ffd180;" onclick="showFounder()">About Founder</span>
+        </div>
+        <p style="opacity:.6;margin-top:20px;">© 2026 All Rights Reserved</p>
+    </footer>
+
+    <button class="offer-btn" onclick="toggleOffer()">Offers</button>
+
+    <div id="offer-popup" class="offer-popup hidden">
+        <h3>There are no offers right now.</h3>
+        <button class="btn btn-outline" onclick="toggleOffer()">Close</button>
+    </div>
+
+    <div id="chat-widget">
+        <div id="chat-header" onclick="toggleChat()">
+            <span>🤖 Darsh AI</span>
+            <span id="chat-arrow">▲</span>
+        </div>
+        <div id="chat-body" class="hidden">
+            <div id="chat-content">
+                <div class="msg bot-msg"><br>Hello! I'm Darsh AI. How can I help you?</div>
+            </div>
+            <div id="chat-input-box">
+                <input type="text" id="user-query" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter'){ submitPrompt(); }"/>
+                <button id="chat-send-btn" onclick="submitPrompt()">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- DYNAMIC ISLAND ALERT LOGIC --- */
+        let alertTimeout;
+        function showUIAlert(message, type = 'error') {
+            const island = document.getElementById('island-box');
+            const msgEl = document.getElementById('island-msg');
+            
+            msgEl.innerText = message;
+            island.className = 'dynamic-island ' + type;
+            
+            // Trigger animation
+            setTimeout(() => island.classList.add('show'), 10);
+
+            // Auto-hide
+            clearTimeout(alertTimeout);
+            alertTimeout = setTimeout(() => {
+                island.classList.remove('show');
+            }, 3500);
+        }
+
+        /* --- JAVASCRIPT LOGIC --- */
+        const authSection = document.getElementById('auth-section');
+        const loginForm = document.getElementById('login-form');
+        const regForm = document.getElementById('register-form');
+        const header = document.getElementById('main-header');
+        const plansSection = document.getElementById('plans-section');
+        const mainWebsite = document.getElementById('main-website');
+        const policySection = document.getElementById('policy-section');
+        const founderSection = document.getElementById('founder-section'); 
+        
+        let currentUserEmail = null;
+
+        window.onload = function() {
+            const savedUser = sessionStorage.getItem('dwd_current_user');
+            if(savedUser) {
+                currentUserEmail = savedUser;
+                const user = getUserData(currentUserEmail);
+                if(user.plan) showMainWebsite(user.plan);
+                else showPlans();
+            }
+        };
+
+        function toggleAuth(view) {
+            if (view === 'register') {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+            } else {
+                regForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            }
+        }
+
+        function handleRegister() {
+            const email = document.getElementById('reg-email').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+            const hasAgreed = document.getElementById('agree-check').checked;
+
+            if (!email.endsWith('@gmail.com')) { showUIAlert("Please enter a valid Gmail address.", "error"); return; }
+            if (pass.length < 4) { showUIAlert("Password is too short.", "error"); return; }
+            if (!hasAgreed) { showUIAlert("You must agree to the Terms and Policy to join.", "error"); return; }
+
+            let users = JSON.parse(localStorage.getItem('dwd_users')) || [];
+            if (users.find(u => u.email === email)) { showUIAlert("User already exists.", "error"); return; }
+
+            users.push({ email: email, password: pass, plan: null });
+            localStorage.setItem('dwd_users', JSON.stringify(users));
+            
+            showUIAlert("Account created successfully! Welcome.", "success");
+            toggleAuth('login');
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            let users = JSON.parse(localStorage.getItem('dwd_users')) || [];
+            const user = users.find(u => u.email === email && u.password === pass);
+
+            if (user) {
+                sessionStorage.setItem('dwd_current_user', email);
+                currentUserEmail = email;
+                showUIAlert("Welcome back! Logged in successfully.", "success");
+                if (user.plan) showMainWebsite(user.plan);
+                else showPlans();
+            } else { 
+                showUIAlert("Invalid email or password.", "error"); 
+            }
+        }
+
+        function logout() { 
+            sessionStorage.removeItem('dwd_current_user');
+            showUIAlert("Logged out. See you soon!", "success");
+            setTimeout(() => location.reload(), 1500); 
+        }
+
+        function selectPlan(planName) {
+            let users = JSON.parse(localStorage.getItem('dwd_users')) || [];
+            const index = users.findIndex(u => u.email === currentUserEmail);
+            if (index !== -1) {
+                users[index].plan = planName;
+                localStorage.setItem('dwd_users', JSON.stringify(users));
+                showMainWebsite(planName);
+            }
+        }
+
+        function showPlans() {
+            hideEverything();
+            header.classList.remove('hidden');
+            plansSection.classList.remove('hidden');
+            document.getElementById('user-display').innerText = currentUserEmail || '';
+        }
+
+        function showMainWebsite(planName) {
+            hideEverything();
+            header.classList.remove('hidden');
+            mainWebsite.classList.remove('hidden');
+            document.getElementById('user-display').innerText = currentUserEmail || '';
+            document.getElementById('user-current-plan').innerText = planName || 'No Plan';
+        }
+
+        function hideEverything() {
+            authSection.classList.add('hidden');
+            plansSection.classList.add('hidden');
+            mainWebsite.classList.add('hidden');
+            policySection.classList.add('hidden');
+            founderSection.classList.add('hidden');
+        }
+
+        function getUserData(email) {
+            let users = JSON.parse(localStorage.getItem('dwd_users')) || [];
+            return users.find(u => u.email === email) || {};
+        }
+
+        /* --- UI HELPERS --- */
+        function toggleOffer() { document.getElementById('offer-popup').classList.toggle('hidden'); }
+        function showPolicy() { hideEverything(); policySection.classList.remove('hidden'); }
+        function closePolicy() { policySection.classList.add('hidden'); restorePreviousView(); }
+        function showFounder() { hideEverything(); founderSection.classList.remove('hidden'); }
+        function closeFounder() { founderSection.classList.add('hidden'); restorePreviousView(); }
+        function changePlan() { mainWebsite.classList.add('hidden'); plansSection.classList.remove('hidden'); }
+        function restorePreviousView() {
+            if (!currentUserEmail) authSection.classList.remove('hidden');
+            else {
+                const user = getUserData(currentUserEmail);
+                if (user.plan) showMainWebsite(user.plan);
+                else showPlans();
+            }
+        }
+
+        // --- SMART AI CHATBOT LOGIC (with thinking animation) ---
+        function toggleChat() {
+            const body = document.getElementById('chat-body');
+            const arrow = document.getElementById('chat-arrow');
+            body.classList.toggle('hidden');
+            const isHidden = body.classList.contains('hidden');
+            body.setAttribute('aria-hidden', isHidden);
+            arrow.innerText = isHidden ? '▲' : '▼';
+        }
+
+        const THINK_TIMES = [3,4,5,6,7,8,9,10]; // seconds (randomly chosen)
+        const aiKnowledge = [
+            { keys: ['hi', 'hello', 'hey', 'start', 'greet','are','you'], response: "Glad to see you! I am the DWD (Darsh Web Developers) AI. How can I help you build your digital future today?" },
+            { keys: ['price', 'cost', 'money', 'rupees', 'how much', 'cheap', 'pay'], response: "Our plans are: Free Trial (₹0), Basic (₹5,099), Advanced (₹8,499), Ultra (₹11,999) and Diamond (₹24,999)" },
+            { keys: ['recommend', 'best plan', 'suggest', 'which one', 'help me choose'], response: "If you are a beginner, start with the Basic Plan. For serious businesses, the Ultra Plan offers the best 1-year value." },
+            { keys: ['founder', 'darsh', 'korale', 'ceo', 'who made', 'boss'], response: "Darsh Korale is a Founder and CEO of Darsh Web Developers — click About Founder for more." },
+            { keys: ['time', 'days', 'fast', 'how long', 'delivery'], response: "We deliver the website in two Business Days as stated in the terms." },
+            { keys: ['ultra','ultra plan'], response: "The Ultra Plan contains SSL Certificate, 1 Year Hosting, Github Domain, Maintenance, Free Bug Fixes, Updates, Website in 2 Days, and Customer Support." },
+            { keys: ['free', 'free trial','free plan'], response: "The Free Trial Plan includes SSL, 5 days hosting and a demo site to evaluate." },
+            { keys: ['advanced', 'advance','advanced plan','advance plan'], response: "The Advanced Plan contains SSL Certificate, 6 Months Hosting, Github Domain, Maintenance, Free Bug Fixes, Updates, Website in 2 Days, and Customer Support." },
+            { keys: ['basic', 'basic plan'], response: "The Basic Plan contains SSL Certificate, 3 Months Hosting, Github Domain, Maintenance, Free Bug Fixes, Updates, Website in 2 Days, and Customer Support." },
+             { keys: ['diamond', 'diamond plan'], response: "The Diamond Plan contains SSL Certificate, 3 Years Hosting, Github Domain, Maintenance, Free Bug Fixes, Updates, Website in 2 Days, and Customer Support." },
+            { keys: ['domain', 'url', 'github', 'link', 'name'], response: "We use GitHub Pages domains for deployment in every plans according to terms of service." },
+            { keys: ['secure', 'safe', 'ssl', 'hack', 'lock'], response: "Every plan includes an SSL Certificate to keep your customer's data encrypted." }
+        ];
+
+        // helper: pick random item from array
+        function randomFrom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // basic escape function to avoid accidental HTML injection in chat
+        function escapeHtml(text) {
+            return (text + '').replace(/[&<>"'`=\/]/g, function (s) {
+                return ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;',
+                    '/': '&#x2F;',
+                    '`': '&#x60;',
+                    '=': '&#x3D;'
+                })[s];
+            });
+        }
+
+        // Wrapper called by button / Enter to clear input immediately
+        function submitPrompt() {
+          const input = document.getElementById('user-query');
+          const text = (input.value || '').trim();
+          if (!text) return;
+          // clear the bar immediately so user sees it cleared
+          input.value = '';
+          input.focus();
+          // call sendChat with the provided text
+          sendChat(text);
+        }
+
+        // Enhanced sendChat that accepts optional 'forcedText'
+        function sendChat(forcedText) {
+          const input = document.getElementById('user-query');
+          const container = document.getElementById('chat-content');
+          const raw = (typeof forcedText !== 'undefined') ? forcedText : (input.value || '').trim();
+          if (!raw) return;
+
+          // Add user message immediately
+          container.innerHTML += `<div class="msg user-msg">${escapeHtml(raw)}</div>`;
+          container.scrollTop = container.scrollHeight;
+
+          // disable input while AI thinks
+          const sendButton = document.getElementById('chat-send-btn');
+          input.disabled = true;
+          if (sendButton) sendButton.disabled = true;
+
+          // create thinking bubble
+          const thinkingBubble = document.createElement('div');
+          thinkingBubble.className = 'msg bot-msg thinking';
+          thinkingBubble.setAttribute('aria-live', 'polite');
+          thinkingBubble.innerHTML = `<strong>Thinking</strong><span class="dot">.</span>`;
+          container.appendChild(thinkingBubble);
+          container.scrollTop = container.scrollHeight;
+
+          // animate dots
+          const dotSpan = thinkingBubble.querySelector('.dot');
+          let dotCount = 1;
+          const dotInterval = setInterval(() => {
+            dotCount = (dotCount % 3) + 1;
+            dotSpan.textContent = '.'.repeat(dotCount);
+            // keep scrolled to bottom while thinking
+            container.scrollTop = container.scrollHeight;
+          }, 400);
+
+          // choose random thinking duration from THINK_TIMES
+          const seconds = randomFrom(THINK_TIMES);
+          const ms = seconds * 1000;
+
+          // compute bot response
+          let botResponse = "I am currently in demo mode and developing mode so i can't answer that question.";
+          if (Array.isArray(aiKnowledge)) {
+            for (let item of aiKnowledge) {
+              if (item.keys && item.keys.some(key => raw.toLowerCase().includes(key))) {
+                botResponse = item.response;
+                break;
+              }
+            }
+          }
+
+          // show response after thinking time
+          setTimeout(() => {
+            clearInterval(dotInterval);
+            if (thinkingBubble && thinkingBubble.parentNode) thinkingBubble.parentNode.removeChild(thinkingBubble);
+
+            container.innerHTML += `<div class="msg bot-msg"><strong>Response:</strong><br>${escapeHtml(botResponse)}</div>`;
+            container.scrollTop = container.scrollHeight;
+
+            // re-enable input
+            input.disabled = false;
+            if (sendButton) sendButton.disabled = false;
+            input.focus();
+          }, ms);
+        }
+    </script>
+</body>
+</html>
