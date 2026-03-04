@@ -406,6 +406,47 @@
             text-align: center;
         }
 
+        /* Captcha specific styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0 6px 0;
+            justify-content: space-between;
+        }
+        .captcha-code {
+            user-select: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            letter-spacing: 3px;
+            background: rgba(255,255,255,0.05);
+            border: 1px dashed rgba(255,255,255,0.12);
+            color: var(--primary);
+            min-width: 135px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            position: relative;
+        }
+        .captcha-actions {
+            display:flex;
+            gap:8px;
+            align-items:center;
+        }
+        .captcha-refresh {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #ddd;
+        }
+        .captcha-refresh:hover { box-shadow: 0 0 8px rgba(0,229,255,0.08); transform: translateY(-2px); }
+
         /* Responsive Mobile Alert Position */
         @media (max-width: 600px) {
             #custom-alert {
@@ -416,6 +457,8 @@
             .dynamic-island {
                 min-width: 250px;
             }
+            .captcha-box { flex-direction: column; gap:6px; align-items:stretch; }
+            .captcha-actions { justify-content: space-between; }
         }
     </style>
 </head>
@@ -443,6 +486,16 @@
             <h2>Darsh Web Developers</h2>
             <input type="email" id="login-email" placeholder="Gmail Address">
             <input type="password" id="login-pass" placeholder="Password">
+
+            <!-- CAPTCHA for login -->
+            <div class="captcha-box" aria-hidden="false" style="margin-top:6px;">
+                <div id="login-captcha-code" class="captcha-code" title="Captcha code"></div>
+                <div class="captcha-actions">
+                    <button type="button" class="captcha-refresh" onclick="refreshCaptcha('login')">Refresh</button>
+                </div>
+            </div>
+            <input type="text" id="login-captcha-input" placeholder="Enter captcha (letters & numbers)">
+
             <button class="btn" onclick="handleLogin()">Log In</button>
             <div class="switch-link" onclick="toggleAuth('register')">New here? Create Account</div>
             
@@ -456,6 +509,15 @@
             <p style="font-size: 0.8rem; color: #ccc; margin-bottom: 20px;">Bring your digital dreams to life</p>
             <input type="email" id="reg-email" placeholder="Enter Gmail Address">
             <input type="password" id="reg-pass" placeholder="Create Password">
+            
+            <!-- CAPTCHA for register -->
+            <div class="captcha-box" aria-hidden="false" style="margin-top:6px;">
+                <div id="reg-captcha-code" class="captcha-code" title="Captcha code"></div>
+                <div class="captcha-actions">
+                    <button type="button" class="captcha-refresh" onclick="refreshCaptcha('reg')">Refresh</button>
+                </div>
+            </div>
+            <input type="text" id="reg-captcha-input" placeholder="Enter captcha (letters & numbers)">
             
             <div class="agree-container">
                 <input type="checkbox" id="agree-check">
@@ -703,7 +765,136 @@
         
         let currentUserEmail = null;
 
+        // --- CAPTCHA: helper functions and initial generation ---
+        function randomCaptcha(length = 6) {
+            // Alphanumeric: letters + numbers; avoid ambiguous ones optionally
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+            let out = '';
+            for (let i = 0; i < length; i++) out += chars.charAt(Math.floor(Math.random() * chars.length));
+            return out;
+        }
+
+        /**
+         * Renders a captcha string INTO the target element using a canvas,
+         * draws obfuscating lines and noise dots across letters & numbers.
+         * This keeps the visual 'lines on captcha letters and numbers' requirement.
+         */
+        function renderCaptchaToElement(element, code) {
+            if (!element) return;
+            // remove existing canvas if any
+            const existing = element.querySelector('canvas');
+            if (existing) element.removeChild(existing);
+
+            // calculate sizes
+            const width = Math.max(150, element.clientWidth || 150);
+            const height = 52; // fixed height (matches CSS)
+            const dpr = window.devicePixelRatio || 1;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            canvas.setAttribute('aria-hidden', 'true');
+
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+
+            // clear background (transparent-ish)
+            ctx.clearRect(0, 0, width, height);
+
+            // subtle gradient background for contrast
+            const grad = ctx.createLinearGradient(0, 0, width, 0);
+            grad.addColorStop(0, 'rgba(0,0,0,0)');
+            grad.addColorStop(1, 'rgba(0,0,0,0.05)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            // draw each character with random rotation, position jitter and font variation
+            const baseFontSize = Math.floor(height * 0.55);
+            const charSpacing = width / (code.length + 1);
+            for (let i = 0; i < code.length; i++) {
+                const ch = code.charAt(i);
+                const fontSize = baseFontSize - (Math.random() * 6); // small size variance
+                ctx.font = `${fontSize}px "Courier New", monospace`;
+
+                // random rotation between -25 and 25 degrees
+                const angle = (Math.random() * 50 - 25) * Math.PI / 180;
+                const x = charSpacing * (i + 0.7) + (Math.random() * 6 - 3);
+                const y = height / 2 + (Math.random() * 6 - 3) + fontSize / 3;
+
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+
+                // stroke + fill for nicer look
+                ctx.lineWidth = 1.2;
+                // fill color slightly cyan-like using CSS var fallback
+                ctx.fillStyle = window.getComputedStyle(document.documentElement).getPropertyValue('--primary') || '#00e5ff';
+                ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+                ctx.strokeText(ch, 0, 0);
+                ctx.fillText(ch, 0, 0);
+
+                ctx.restore();
+            }
+
+            // draw obfuscating lines across the captcha (user requested "Add some lines on captcha letters and numbers")
+            const lineCount = 4 + Math.floor(Math.random() * 3); // 4..6 lines
+            for (let i = 0; i < lineCount; i++) {
+                ctx.beginPath();
+                ctx.lineWidth = 1 + Math.random() * 1.5;
+                ctx.moveTo(Math.random() * width, Math.random() * height);
+                ctx.quadraticCurveTo(Math.random() * width, Math.random() * height, Math.random() * width, Math.random() * height);
+                ctx.strokeStyle = `rgba(255,255,255,${0.06 + Math.random() * 0.12})`;
+                ctx.stroke();
+            }
+
+            // add random dots/noise
+            const dotCount = 16 + Math.floor(Math.random() * 25);
+            for (let i = 0; i < dotCount; i++) {
+                ctx.beginPath();
+                const rx = Math.random() * width;
+                const ry = Math.random() * height;
+                const r = Math.random() * 1.8;
+                ctx.fillStyle = `rgba(255,255,255,${0.03 + Math.random() * 0.12})`;
+                ctx.arc(rx, ry, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // append canvas into element
+            element.appendChild(canvas);
+
+            // update title for accessibility (already present but make explicit)
+            element.setAttribute('title', 'Captcha code (letters & numbers). Visual noise lines added.');
+        }
+
+        function setCaptcha(codeId, storageKey) {
+            const el = document.getElementById(codeId);
+            if (!el) return;
+            const code = randomCaptcha(6);
+            // store current code so validation uses the exact value shown
+            sessionStorage.setItem(storageKey, code);
+            // render onto canvas with noisy lines/dots
+            renderCaptchaToElement(el, code);
+        }
+
+        function refreshCaptcha(type) {
+            if (type === 'login') setCaptcha('login-captcha-code', 'dwd_captcha_login');
+            else if (type === 'reg') setCaptcha('reg-captcha-code', 'dwd_captcha_reg');
+        }
+
+        function validateCaptcha(type, enteredValue) {
+            const key = (type === 'login') ? 'dwd_captcha_login' : 'dwd_captcha_reg';
+            const stored = sessionStorage.getItem(key) || '';
+            if (!enteredValue) return false;
+            // compare case-insensitive, trim spaces
+            return stored.toLowerCase().trim() === enteredValue.toLowerCase().trim();
+        }
+
         window.onload = function() {
+            // initialize captcha codes
+            try { refreshCaptcha('login'); refreshCaptcha('reg'); } catch(e) {}
+
             const savedUser = sessionStorage.getItem('dwd_current_user');
             if(savedUser) {
                 currentUserEmail = savedUser;
@@ -717,34 +908,56 @@
             if (view === 'register') {
                 loginForm.classList.add('hidden');
                 regForm.classList.remove('hidden');
+                // refresh register captcha when switching
+                refreshCaptcha('reg');
             } else {
                 regForm.classList.add('hidden');
                 loginForm.classList.remove('hidden');
+                // refresh login captcha when switching
+                refreshCaptcha('login');
             }
         }
 
         function handleRegister() {
             const email = document.getElementById('reg-email').value.trim();
             const pass = document.getElementById('reg-pass').value.trim();
+            const enteredCaptcha = document.getElementById('reg-captcha-input').value.trim();
             const hasAgreed = document.getElementById('agree-check').checked;
 
-            if (!email.endsWith('@gmail.com')) { showUIAlert("Please enter a valid Gmail address.", "error"); return; }
-            if (pass.length < 4) { showUIAlert("Password is too short.", "error"); return; }
-            if (!hasAgreed) { showUIAlert("You must agree to the Terms and Policy to join.", "error"); return; }
+            if (!email.endsWith('@gmail.com')) { showUIAlert("Please enter a valid Gmail address.", "error"); refreshCaptcha('reg'); return; }
+            if (pass.length < 4) { showUIAlert("Password is too short.", "error"); refreshCaptcha('reg'); return; }
+            if (!hasAgreed) { showUIAlert("You must agree to the Terms and Policy to join.", "error"); refreshCaptcha('reg'); return; }
+
+            // captcha validation
+            if (!validateCaptcha('reg', enteredCaptcha)) {
+                showUIAlert("Captcha doesn't match. Try again.", "error");
+                refreshCaptcha('reg');
+                return;
+            }
 
             let users = JSON.parse(localStorage.getItem('dwd_users')) || [];
-            if (users.find(u => u.email === email)) { showUIAlert("User already exists.", "error"); return; }
+            if (users.find(u => u.email === email)) { showUIAlert("User already exists.", "error"); refreshCaptcha('reg'); return; }
 
             users.push({ email: email, password: pass, plan: null });
             localStorage.setItem('dwd_users', JSON.stringify(users));
             
             showUIAlert("Account created successfully! Welcome.", "success");
+            // clear captcha input for security
+            document.getElementById('reg-captcha-input').value = '';
             toggleAuth('login');
         }
 
         function handleLogin() {
             const email = document.getElementById('login-email').value.trim();
             const pass = document.getElementById('login-pass').value.trim();
+            const enteredCaptcha = document.getElementById('login-captcha-input').value.trim();
+
+            // captcha validation before checking credentials
+            if (!validateCaptcha('login', enteredCaptcha)) {
+                showUIAlert("Captcha doesn't match. Try again.", "error");
+                refreshCaptcha('login');
+                return;
+            }
 
             let users = JSON.parse(localStorage.getItem('dwd_users')) || [];
             const user = users.find(u => u.email === email && u.password === pass);
@@ -753,10 +966,14 @@
                 sessionStorage.setItem('dwd_current_user', email);
                 currentUserEmail = email;
                 showUIAlert("Welcome back! Logged in successfully.", "success");
+                // clear captcha input for security
+                document.getElementById('login-captcha-input').value = '';
                 if (user.plan) showMainWebsite(user.plan);
                 else showPlans();
             } else { 
                 showUIAlert("Invalid email or password.", "error"); 
+                // refresh captcha if wrong credentials
+                refreshCaptcha('login');
             }
         }
 
@@ -837,6 +1054,7 @@
             { keys: ['recommend', 'best plan', 'suggest', 'which one', 'help me choose'], response: "If you are a beginner, start with the Basic Plan. For serious businesses, the Ultra Plan offers the best 1-year value." },
             { keys: ['founder', 'darsh', 'korale', 'ceo', 'who made', 'boss'], response: "Darsh Korale is a Founder and CEO of Darsh Web Developers — click About Founder for more." },
             { keys: ['time', 'days', 'fast', 'how long', 'delivery'], response: "We deliver the website in two Business Days as stated in the terms." },
+            { keys: ['compare', 'comparision', 'features', 'all', 'plans'], response: "" },
             { keys: ['ultra','ultra plan'], response: "The Ultra Plan contains SSL Certificate, 1 Year Hosting, Github Domain, Maintenance, Free Bug Fixes, Updates, Website in 2 Days, and Customer Support." },
             { keys: ['free', 'free trial','free plan'], response: "The Free Trial Plan includes SSL, 5 days hosting and a demo site to evaluate." },
             { keys: ['advanced', 'advance','advanced plan','advance plan'], response: "The Advanced Plan contains SSL Certificate, 6 Months Hosting, Github Domain, Maintenance, Free Bug Fixes, Updates, Website in 2 Days, and Customer Support." },
