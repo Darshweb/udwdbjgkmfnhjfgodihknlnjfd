@@ -1,995 +1,793 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Vishwamegh Distributors | Premium Beauty</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Devaki Paithani - Premium Paithani & Silk Sarees Manufacturer & Wholesaler">
+    <title>Devaki Paithani | Timeless Elegance in Every Saree</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@400;500&amp;display=swap');
+        
         :root {
-            --primary: #F7C6D9;
-            --secondary: #E89AB0;
-            --accent: #C9A46C;
-            --bg-main: #FFF7F2;
-            --text-main: #3A2E2A;
-            --bg-sec: #F1E3D3;
-            --glass-bg: rgba(255, 247, 242, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --shadow-soft: 0 10px 25px rgba(58, 46, 42, 0.08);
+            --primary: #9f1239;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
+        
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
         }
-
-        /* NAV */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        
+        .tailwind-ready * {
+            transition-duration: 300ms;
         }
-
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-main); letter-spacing: 0.5px; }
-
-        .nav-actions { display: flex; gap: 12px; align-items: center; }
-
-        button {
-            cursor: pointer;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: 600;
-            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-            will-change: transform;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #fdf4f0 0%, #f8e8d8 100%);
         }
-
-        /* Button press effect */
-        button:active, button.pressed {
-            transform: scale(0.95);
-        }
-
-        .btn-contact { background-color: var(--bg-sec); color: var(--text-main); }
-        .btn-contact:hover { background-color: var(--accent); color: #fff; }
-
-        .btn-cart { background-color: var(--primary); color: var(--text-main); position: relative; }
-        .btn-cart:hover { background-color: var(--secondary); color: #fff; }
-
-        #cart-count {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            height: 22px;
-            width: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transform-origin: center;
-        }
-
-        /* pop animation */
-        @keyframes pop {
-            0% { transform: scale(1); }
-            40% { transform: scale(1.45); }
-            100% { transform: scale(1); }
-        }
-        #cart-count.pop { animation: pop 450ms cubic-bezier(.2,.9,.3,1); }
-
-        /* Sections */
-        section {
-            padding: 7rem 5% 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 600ms ease, transform 600ms ease;
-        }
-        section.in-view { opacity: 1; transform: translateY(0); }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 2.5rem;
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
-        /* Offers Section with parallax */
-        .offers-banner {
-            position: relative;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 20px;
-            padding: 2.5rem;
-            text-align: center;
-            color: white;
-            box-shadow:
-                0 1px 2px rgba(0,0,0,0.07),
-                0 2px 4px rgba(0,0,0,0.06),
-                0 6px 20px rgba(58,46,42,0.09);
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        /* Parallax title - moves slower than the page */
-        .offers-banner h2 {
-            font-size: 2rem;
-            transform: translateY(0);
-            transition: transform 0.1s linear;
-            will-change: transform;
-            pointer-events: none;
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
+        
         .product-card {
-            background: var(--bg-main);
-            border-radius: 20px;
-            padding: 1.2rem;
-            text-align: center;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            position: relative;
-            border: 1px solid var(--glass-border);
-            /* layered soft shadows */
-            box-shadow:
-                0 1px 2px rgba(0,0,0,0.07),
-                0 2px 4px rgba(0,0,0,0.06),
-                0 8px 30px rgba(58,46,42,0.08);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
+        
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow:
-                0 4px 8px rgba(0,0,0,0.08),
-                0 12px 40px rgba(58,46,42,0.12);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 25px 25px 0 -10px rgb(159 18 57);
         }
-
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 280px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 1.2rem;
-            background-color: var(--bg-sec);
-            cursor: zoom-in;
+        
+        .logo-glow {
+            filter: drop-shadow(0 0 15px rgba(159, 18, 57, 0.3));
         }
-
-        .carousel-track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary);
-            font-weight: 600;
-            font-size: 0.9rem;
-            border-radius: 16px;
-            background-size: cover;
-            background-position: center;
+        
+        .nav-link {
             position: relative;
         }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 16px;
-            display: block;
-        }
-
-        .carousel-btn {
+        
+        .nav-link:after {
+            content: '';
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.6);
-            color: var(--text-main);
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 10; opacity: 0;
-            transition: opacity 0.3s, background 0.3s;
-            padding: 0; font-size: 1.2rem;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #9f1239;
         }
-
-        .product-card:hover .carousel-btn { opacity: 1; }
-        .carousel-btn:hover { background: rgba(255,255,255,0.8); }
-        .carousel-btn.prev { left: 10px; } .carousel-btn.next { right: 10px; }
-
-        .carousel-dots {
-            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display:flex; gap:6px; z-index: 10;
+        
+        .nav-link:hover:after {
+            width: 100%;
         }
-
-        .dot { width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,0.5); transition: background 0.3s, transform 0.3s; }
-        .dot.active { background: var(--text-main); transform: scale(1.2); }
-
-        .product-title { font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700; }
-        .product-price { font-weight: 700; color: var(--accent); font-size: 1.2rem; margin-bottom: 1.2rem; }
-
-        .btn-add { width: 100%; background-color: var(--text-main); color: var(--bg-main); padding: 12px; font-size: 1rem; }
-        .btn-add:hover { background-color: var(--accent); }
-
-        /* Modal / Popup */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(58,46,42,0.5);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: none; justify-content: center; align-items: center;
-            z-index: 2000; opacity: 0; transition: opacity 0.3s ease;
+        
+        .cart-slide {
+            animation: slideIn 0.4s cubic-bezier(0.32, 0.72, 0, 1);
         }
-        .modal-overlay.active { opacity: 1; }
-
-        .modal-content {
-            background: var(--bg-main); width: 90%; max-width: 550px; border-radius: 24px; padding: 2.5rem;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 1px solid var(--glass-border);
-            max-height: 85vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
         }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-
-        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom: 1.5rem; border-bottom: 2px solid var(--bg-sec); padding-bottom:1rem; }
-        .close-btn { background: var(--bg-sec); color: var(--text-main); width:35px; height:35px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:1.2rem; padding:0; }
-        .close-btn:hover { background: var(--primary); color:white; }
-
-        .reorder-btn { background: transparent; color: var(--accent); padding: 8px 12px; border-radius: 10px; font-weight:700; border: 1px dashed var(--accent); }
-
-        .cart-item { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--bg-sec); }
-        .checkout-area { margin-top:1.5rem; display:none; background: var(--bg-sec); padding:1.5rem; border-radius:16px; border:1px solid var(--glass-border); animation: slideDown 0.4s ease forwards; }
-        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
-
-        textarea { width:100%; height:130px; padding:15px; border-radius:12px; border:1px solid var(--secondary); background:#fff; color:var(--text-main); resize:none; font-family:inherit; margin-bottom:12px; font-size:0.9rem; }
-
-        .btn-checkout { width:100%; background-color: var(--accent); color: white; padding:14px; font-size:1.1rem; margin-top:1.5rem; }
-        .btn-checkout:hover { background-color: var(--text-main); }
-
-        /* Toast */
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text-main); color: white; padding: 12px 24px; border-radius: 30px; font-weight: 600; box-shadow: 0 10px 20px rgba(0,0,0,0.15); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); z-index: 3000; }
-        .toast.show { transform: translateX(-50%) translateY(0); }
-
-        /* Footer - frosted glass */
-        footer {
-            text-align:center; padding:2.5rem; margin-top:4rem;
-            background: rgba(58,46,42,0.6);
-            color: var(--bg-main);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255,255,255,0.08);
-        }
-        .dev-credit { font-size:0.85rem; opacity:0.6; margin-top:12px; letter-spacing:1px; }
-
-        /* Loader overlay inside modal */
-        .modal-loader {
-            position: absolute; inset: 0; display:flex; align-items:center; justify-content:center;
-            background: rgba(255,255,255,0.6); z-index: 30; backdrop-filter: blur(4px);
-            display: none;
-        }
-        .modal-loader.active { display:flex; }
-
+        
         .spinner {
-            width: 72px; height: 72px; border-radius: 50%; border: 8px solid rgba(0,0,0,0.08); border-top-color: var(--accent);
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Magnifier lens (spyglass) */
-        .img-lens {
-            position: absolute; border-radius: 50%; width: 110px; height: 110px; pointer-events: none;
-            box-shadow: 0 6px 18px rgba(58,46,42,0.18), inset 0 2px 6px rgba(255,255,255,0.12);
-            border: 3px solid rgba(255,255,255,0.85);
-            display: none; z-index: 40; background-repeat: no-repeat;
-            background-size: 200%;
-            opacity: 0;
-            transform: scale(0.92);
-            transition: opacity 160ms ease, transform 160ms ease;
-        }
-        .img-lens.visible { display: block; opacity: 1; transform: scale(1); }
-
-        /* Confetti canvas */
-        #confetti-canvas { position: fixed; pointer-events: none; top:0; left:0; width:100%; height:100%; z-index: 4000; display:none; }
-
-        /* magnetic effect hint */
-        .magnetic { transition: transform 220ms cubic-bezier(.2,.9,.3,1); will-change: transform; }
-
-        /* nice focus outlines for accessibility */
-        button:focus { outline: 3px solid rgba(201,164,108,0.22); outline-offset: 3px; }
-
-        /* minimal responsive adjustments */
-        @media (max-width:480px) {
-            .carousel-container { height: 200px; }
-            .img-lens { width: 90px; height: 90px; }
+        
+        .section-header {
+            font-family: 'Playfair Display', serif;
         }
     </style>
 </head>
-<body>
+<body class="tailwind-ready font-sans bg-[#fffaf0]">
+    <!-- HEADER / NAVBAR -->
+    <header class="bg-white border-b-2 border-[#9f1239]/10 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between px-6 py-5">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3">
+                    <img src="logo.jpg" alt="Devaki Paithani Logo" class="h-14 w-auto logo-glow">
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-[-1px] text-[#9f1239] section-header">Devaki</h1>
+                        <p class="text-xs font-medium text-[#9f1239]/80 -mt-1">Paithani &amp; Silk Sarees</p>
+                    </div>
+                </div>
 
-    <nav>
-        <div class="logo">Vishwamegh Distributors</div>
-        <div class="nav-actions">
-            <button class="btn-contact magnetic" onclick="window.location.href='tel:+918999079379'">Contact Us</button>
-            <button class="btn-cart magnetic" onclick="toggleCart()">
-                Cart <span id="cart-count">0</span>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="#" onclick="navigateToSection('home')" class="nav-link text-[#3f2a1e]">HOME</a>
+                    <a href="#" onclick="navigateToSection('shop')" class="nav-link text-[#3f2a1e]">SHOP COLLECTION</a>
+                    <a href="#" class="nav-link text-[#3f2a1e]">OUR STORY</a>
+                    <a href="#" class="nav-link text-[#3f2a1e]">WHOLESALE</a>
+                    <a href="#" class="nav-link text-[#3f2a1e]">CONTACT</a>
+                </nav>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-x-6">
+                    <!-- Cart Icon -->
+                    <button onclick="toggleCart()" class="flex items-center gap-x-2 relative group">
+                        <div class="relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#3f2a1e] group-hover:text-[#9f1239]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span id="cart-count-badge" class="absolute -top-1 -right-1 bg-[#9f1239] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+                        </div>
+                        <span class="hidden sm:block text-sm font-medium text-[#3f2a1e]">Cart</span>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-[#3f2a1e]">
+                        <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-6 py-4">
+                <div class="flex flex-col gap-y-4 text-sm font-medium">
+                    <a href="#" onclick="navigateToSection('home');toggleMobileMenu()" class="py-2 text-[#3f2a1e]">HOME</a>
+                    <a href="#" onclick="navigateToSection('shop');toggleMobileMenu()" class="py-2 text-[#3f2a1e]">SHOP COLLECTION</a>
+                    <a href="#" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">OUR STORY</a>
+                    <a href="#" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">WHOLESALE</a>
+                    <a href="#" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">CONTACT</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero-bg py-16 md:py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-x-2 bg-white/80 text-[#9f1239] text-xs font-semibold px-6 py-2 rounded-3xl shadow-inner">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#9f1239] opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-[#9f1239]"></span>
+                    </span>
+                    NEW ARRIVALS • SOFT SILK KALANJALI PAITHANI
+                </div>
+                
+                <h2 class="text-6xl md:text-7xl leading-none font-bold text-[#3f2a1e] section-header tracking-[-2px]">
+                    Timeless<br>Paithani.<br>Pure Elegance.
+                </h2>
+                
+                <p class="max-w-md text-lg text-[#3f2a1e]/80">
+                    Handcrafted in Maharashtra. Woven with love. 
+                    Worn by queens. Now available for you.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="navigateToSection('shop')" 
+                            class="bg-[#9f1239] hover:bg-[#7f0f2e] text-white px-10 py-5 rounded-2xl font-semibold flex items-center gap-x-3 shadow-xl shadow-[#9f1239]/30">
+                        <span>EXPLORE COLLECTION</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    
+                    <a href="https://wa.me/918446918749" target="_blank"
+                       class="border-2 border-[#9f1239] text-[#9f1239] hover:bg-[#9f1239] hover:text-white px-8 py-5 rounded-2xl font-semibold flex items-center gap-x-2">
+                        <span>Contact US</span>
+                        <span class="text-2xl">💬</span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-x-8 text-sm">
+                    <div class="flex items-center">
+                        <div class="text-[#9f1239] text-4xl"></div>
+                        <div class="ml-3">
+                            <p class="font-semibold"></p>
+                            <p class="text-xs text-[#3f2a1e]/70"></p>
+                        </div>
+                    </div>
+                    <div class="h-9 w-px bg-[#9f1239]/20"></div>
+                    <p class="text-[#3f2a1e]/80">Free Shipping • 100% Handloom Guaranteed</p>
+                </div>
+            </div>
+            
+            <!-- Hero visual -->
+            <div class="relative flex justify-center">
+                <div class="absolute -top-8 -right-8 bg-white rounded-3xl shadow-2xl p-3 rotate-12 hidden lg:block">
+                    <img src="3.jpeg" alt="Blue Paithani" class="w-52 h-52 object-cover rounded-2xl">
+                </div>
+                <div class="bg-white rounded-3xl shadow-2xl p-4 -rotate-6">
+                    <img src="1.jpeg" alt="Green Forest Paithani" class="w-72 md:w-80 h-80 object-cover rounded-3xl">
+                </div>
+                <div class="absolute -bottom-6 -left-6 bg-white rounded-3xl shadow-2xl p-3 rotate-12 hidden lg:block">
+                    <img src="2.jpeg" alt="Red Paithani" class="w-52 h-52 object-cover rounded-2xl">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Trust bar -->
+        <div class="mt-16 border-t border-[#9f1239]/10 bg-white/70 py-5">
+            <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between items-center gap-8 text-xs uppercase font-medium text-[#3f2a1e]/70">
+                <div class="flex items-center gap-x-2"><span class="text-xl">🧵</span> Handwoven in Paithan</div>
+                <div class="flex items-center gap-x-2"><span class="text-xl">🌿</span> Pure Silk &amp; Zari</div>
+                <div class="flex items-center gap-x-2"><span class="text-xl">👑</span> 100+ Traditional Motifs</div>
+                <div class="flex items-center gap-x-2"><span class="text-xl">📦</span> Ready to Ship Today</div>
+                <div class="flex items-center gap-x-2"><span class="text-xl">🔄</span> Easy Returns</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOP SECTION -->
+    <section id="shop" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+            <div>
+                <span class="uppercase tracking-[2px] text-[#9f1239] text-sm font-medium">OUR COLLECTION</span>
+                <h2 class="text-4xl section-header text-[#3f2a1e]">Soft Silk Kalanjali Paithani</h2>
+            </div>
+            
+            <!-- Sorting -->
+            <div class="flex items-center gap-x-3">
+                <label class="text-sm font-medium text-[#3f2a1e]">Sort by:</label>
+                <select id="sort-select" onchange="sortProducts()" 
+                        class="bg-white border border-[#9f1239]/20 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#9f1239]">
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- CART DRAWER -->
+    <div onclick="if(event.target.id === 'cart-backdrop')toggleCart()" 
+         id="cart-backdrop"
+         class="hidden fixed inset-0 bg-black/60 z-[9999] backdrop-blur-sm">
+    </div>
+    
+    <div id="cart-drawer" 
+         class="hidden fixed top-0 bottom-0 right-0 w-full max-w-md bg-white shadow-2xl z-[10000] flex flex-col cart-slide">
+        
+        <div class="px-6 py-6 border-b flex items-center justify-between">
+            <h3 class="text-2xl font-semibold text-[#3f2a1e]">Your Cart</h3>
+            <button onclick="toggleCart()" class="text-[#9f1239] text-4xl leading-none">×</button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+            <!-- Populated by JS -->
+            <div class="text-center py-12 text-[#9f1239]/40">
+                <p class="text-6xl mb-3">🛍️</p>
+                <p class="font-medium">Your cart is empty</p>
+                <p class="text-sm mt-2">Add some beautiful Paithani sarees</p>
+            </div>
+        </div>
+        
+        <div class="px-6 py-6 border-t bg-[#fffaf0]">
+            <div class="flex justify-between items-baseline mb-6">
+                <span class="text-lg font-medium">Subtotal</span>
+                <span id="cart-total" class="text-3xl font-semibold text-[#9f1239]">₹0</span>
+            </div>
+            
+            <button onclick="proceedToCheckout()" 
+                    id="checkout-btn"
+                    class="w-full bg-[#9f1239] hover:bg-[#7f0f2e] text-white py-6 rounded-3xl font-semibold text-lg flex items-center justify-center gap-x-3">
+                PROCEED TO CHECKOUT
             </button>
+            
+            <p onclick="toggleCart()" class="text-center text-sm mt-4 text-[#3f2a1e]/60 cursor-pointer">Continue Shopping</p>
         </div>
-    </nav>
+    </div>
 
-    <section id="offers">
-        <div class="offers-banner">
-            <h2 id="parallax-title">Exclusive Beauty Collection</h2>
-            <p>Discover premium cosmetics curated for elegance and luxury. Stay tuned for upcoming seasonal offers!</p>
-        </div>
-    </section>
-
-    <section id="products">
-        <h2 class="section-title">Premium Collection</h2>
-        <div class="products-grid" id="product-list">
-        </div>
-    </section>
-
-    <div class="modal-overlay" id="cart-modal">
-        <div class="modal-content" id="modal-content">
-            <div class="modal-loader" id="modal-loader">
-                <div>
-                    <div class="spinner"></div>
-                    <div style="text-align:center; margin-top:10px; font-weight:700; color:var(--text-main)">Loading...</div>
+    <!-- CHECKOUT MODAL -->
+    <div onclick="if(event.target.id === 'checkout-modal')hideCheckout()" 
+         id="checkout-modal"
+         class="hidden fixed inset-0 bg-black/70 z-[11000] flex items-center justify-center">
+        
+        <div onclick="event.stopImmediatePropagation()" 
+             class="bg-white rounded-3xl max-w-lg w-full mx-4 overflow-hidden">
+            
+            <div class="px-8 pt-8 pb-4 border-b">
+                <div class="flex justify-between">
+                    <h3 class="text-3xl section-header">Checkout Summary</h3>
+                    <button onclick="hideCheckout()" class="text-4xl text-[#9f1239]">×</button>
                 </div>
             </div>
-
-            <div class="modal-header">
-                <h2>Your Cart</h2>
-                <div style="display:flex; gap:8px; align-items:center;">
-                    <button class="reorder-btn" id="reorder-btn" style="display:none;">Quick Reorder</button>
-                    <button class="close-btn" onclick="toggleCart()">&times;</button>
-                </div>
+            
+            <div id="checkout-content" class="px-8 py-8 space-y-6">
+                <!-- Filled by JS -->
             </div>
-
-            <div id="cart-items-container">
-                <p>Your cart is empty.</p>
-            </div>
-
-            <div style="text-align: right; margin-top: 20px; font-weight: 800; font-size: 1.3rem; color: var(--text-main);" id="cart-total-display">
-                Total: ₹0
-            </div>
-
-            <button class="btn-checkout" id="init-checkout-btn" onclick="showCheckout()" style="display:none;">Proceed to Checkout</button>
-
-            <div class="checkout-area" id="checkout-area">
-                <div class="checkout-instructions">
-                    📞 Please Contact 8999079379 / 9665290026.<br>
-                    Copy and paste the message below and send it to us via WhatsApp to finalize your order!
-                </div>
-                <textarea id="order-message" readonly></textarea>
-                <button class="btn-add" id="copy-btn" onclick="copyAndClearCart()">Copy Message & Open WhatsApp</button>
+            
+            <div class="px-8 py-8 bg-[#fffaf0] flex flex-col gap-y-4">
+                <button onclick="handleWhatsAppCheckout()" 
+                        class="flex items-center justify-center gap-x-3 bg-[#25D366] hover:bg-[#20c55e] text-white py-6 rounded-3xl font-semibold text-lg shadow-inner">
+                    <span class="text-3xl">💬</span>
+                    COPY &amp; OPEN WHATSAPP
+                </button>
+                
+                <p class="text-xs text-center text-[#3f2a1e]/60">
+                    Message will be pre-filled with your order details<br>
+                    Number: <span class="font-medium">+91 84469 18749</span>
+                </p>
+                
+                <button onclick="hideCheckout()" 
+                        class="text-sm py-3 text-[#9f1239]">Back to Cart</button>
             </div>
         </div>
     </div>
 
-    <div class="toast" id="toast-msg">Order copied! Redirecting...</div>
+    <!-- SUCCESS TOAST -->
+    <div id="toast" onclick="this.classList.add('hidden')" 
+         class="hidden fixed bottom-6 right-6 bg-[#3f2a1e] text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-x-3 z-[99999]">
+        <span id="toast-text" class="font-medium"></span>
+    </div>
 
-    <footer>
-        <p>&copy; 2026 Vishwamegh Distributors. All Rights Reserved.</p>
+    <!-- FOOTER -->
+    <footer class="bg-[#3f2a1e] text-[#f8e8d8] py-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-y-10">
+            <div>
+                <img src="logo.jpg" alt="Devaki Paithani" class="h-12 mb-4 brightness-110">
+                <p class="text-sm max-w-xs">Manufacturer &amp; Wholesaler of authentic Paithani &amp; . Proudly made in Paithan, Maharashtra.</p>
+                <p class="mt-8 text-xs">📍 Yeola, Maharashtra</p>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-6 text-sm">
+                <div>
+                    <p class="font-semibold mb-4 text-[#f8e8d8]">SHOP</p>
+                    <p class="cursor-pointer hover:text-white">All Sarees</p>
+                    <p class="cursor-pointer hover:text-white">New Arrivals</p>
+                    <p class="cursor-pointer hover:text-white">Kalanjali Series</p>
+                </div>
+                <div>
+                    <p class="font-semibold mb-4 text-[#f8e8d8]">EXPLORE</p>
+                    <p class="cursor-pointer hover:text-white">Our Story</p>
+                    <p class="cursor-pointer hover:text-white">Wholesale Inquiry</p>
+                    <p class="cursor-pointer hover:text-white">Size Guide</p>
+                </div>
+                <div>
+                    <p class="font-semibold mb-4 text-[#f8e8d8]">CONNECT</p>
+                    <p onclick="window.open('https://wa.me/918446918749','_blank')" class="cursor-pointer hover:text-white flex items-center gap-x-1">WhatsApp <span class="text-xl">💬</span></p>
+                    <p class="cursor-pointer hover:text-white">Instagram</p>
+                    <p class="cursor-pointer hover:text-white">+91 84469 18749</p>
+                </div>
+            </div>
+            
+            <div class="text-right">
+                <p class="text-4xl font-light mb-2">Crafted with love.</p>
+                <p class="text-xs">© 2026 Devaki Paithani. All Rights Reserved.</p>
+                <p class="mt-8 text-xs flex justify-end items-center gap-x-4">
+                    MADE IN INDIA 🇮🇳 
+                    <span class="text-[#9f1239]">✺</span> 
+                    PURE sARI
+                </p>
+            </div>
+        </div>
     </footer>
 
-    <!-- Magnifier lens -->
-    <div class="img-lens" id="img-lens"></div>
-
-    <!-- Confetti canvas -->
-    <canvas id="confetti-canvas"></canvas>
-
     <script>
-        /**********************************************
-         * Original product data and core logic kept *
-         * Small behavior tweaks added:               *
-         * - Magnetic sensitivity reduced & limited  *
-         * - Magnifier lens only for mouse + hides    *
-         **********************************************/
-        const products = [
-            { id: 1, name: "Luxury Glow Serum", price: 850, images: ["b.jpg", "back-view.jpg"] },
-            { id: 2, name: "Rose Hydration Mist", price: 450, images: ["front-view.jpg", "back-view.jpg"] },
-            { id: 3, name: "Velvet Matte Lipstick", price: 600, images: ["swatch-1.jpg", "swatch-2.jpg", "packaging.jpg"] },
-            { id: 4, name: "Gold Infused Night Cream", price: 1200, images: ["box.jpg", "jar.jpg"] }
-        ];
-
-        // state
-        let cart = [];
-        let carouselIndices = {};
-        const CART_KEY = 'vishwamegh_cart_v1';
-        const PREV_ORDERS_KEY = 'vishwamegh_prev_orders_v1';
-
-        /* ---------- Persistence: load cart from localStorage ---------- */
-        function loadPersistedCart() {
-            try {
-                const raw = localStorage.getItem(CART_KEY);
-                if (raw) {
-                    cart = JSON.parse(raw) || [];
-                }
-            } catch(e) { cart = []; }
-        }
-        function persistCart() {
-            try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch(e) {}
-        }
-
-        /* ---------- Render Products (kept core, extended) ---------- */
-        function renderProducts() {
-            const grid = document.getElementById('product-list');
-            grid.innerHTML = '';
-
-            products.forEach(product => {
-                carouselIndices[product.id] = 0;
-
-                let slidesHTML = product.images.map(imgSrc =>
-                    `<div class="carousel-slide" style="border: none;">
-                        <img src="${imgSrc}" alt="${product.name}" data-product-id="${product.id}" />
-                    </div>`
-                ).join('');
-
-                let dotsHTML = product.images.map((_, index) =>
-                    `<div class="dot ${index === 0 ? 'active' : ''}" id="dot-${product.id}-${index}"></div>`
-                ).join('');
-
-                const card = document.createElement('div');
-                card.className = 'product-card fade-target';
-                card.innerHTML = `
-                    <div class="carousel-container">
-                        <div class="carousel-track" id="track-${product.id}">
-                            ${slidesHTML}
-                        </div>
-                        ${product.images.length > 1 ? `
-                            <button class="carousel-btn prev" onclick="moveCarousel(${product.id}, -1)">&#10094;</button>
-                            <button class="carousel-btn next" onclick="moveCarousel(${product.id}, 1)">&#10095;</button>
-                            <div class="carousel-dots">
-                                ${dotsHTML}
-                            </div>
-                        ` : ''}
-                    </div>
-                    <h3 class="product-title">${product.name}</h3>
-                    <div class="product-price">₹${product.price}</div>
-                    <button class="btn-add magnetic" onclick="addToCart(${product.id}, this)">Add to Cart</button>
-                `;
-                grid.appendChild(card);
-            });
-
-            // attach magnifier hover handlers after images are present
-            setupMagnifier();
-            setupFadeObserver(); // re-observe for smooth transitions
-        }
-
-        /* ---------- Carousel ---------- */
-        function moveCarousel(productId, direction) {
-            const product = products.find(p => p.id === productId);
-            const maxIndex = product.images.length - 1;
-            carouselIndices[productId] += direction;
-            if (carouselIndices[productId] > maxIndex) carouselIndices[productId] = 0;
-            if (carouselIndices[productId] < 0) carouselIndices[productId] = maxIndex;
-            const newIndex = carouselIndices[productId];
-            const track = document.getElementById(`track-${productId}`);
-            track.style.transform = `translateX(-${newIndex * 100}%)`;
-            for (let i = 0; i <= maxIndex; i++) {
-                const dot = document.getElementById(`dot-${productId}-${i}`);
-                if (dot) dot.classList.remove('active');
-            }
-            const activeDot = document.getElementById(`dot-${productId}-${newIndex}`);
-            if (activeDot) activeDot.classList.add('active');
-        }
-
-        /* ---------- Update Cart UI + persistence + cart count bounce ---------- */
-        function updateCartUI() {
-            persistCart(); // save whenever UI updates
-            document.getElementById('cart-count').innerText = cart.reduce((s, it) => s + it.quantity, 0);
-
-            // bounce/pop effect on count
-            const countEl = document.getElementById('cart-count');
-            countEl.classList.remove('pop');
-            // force reflow to restart animation
-            void countEl.offsetWidth;
-            countEl.classList.add('pop');
-
-            const container = document.getElementById('cart-items-container');
-            const totalDisplay = document.getElementById('cart-total-display');
-            const initCheckoutBtn = document.getElementById('init-checkout-btn');
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color: var(--secondary); margin-top: 1rem;">Your cart is currently empty.</p>';
-                totalDisplay.style.display = 'none';
-                initCheckoutBtn.style.display = 'none';
-                document.getElementById('checkout-area').style.display = 'none';
-                return;
-            }
-
-            totalDisplay.style.display = 'block';
-            initCheckoutBtn.style.display = 'block';
-            container.innerHTML = '';
-
-            let total = 0;
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <div>
-                            <strong style="color: var(--text-main);">${item.name}</strong><br>
-                            <small style="color: var(--accent);">₹${item.price} x ${item.quantity}</small>
-                        </div>
-                        <div style="font-weight: 600;">₹${itemTotal}</div>
-                    </div>
-                `;
-            });
-
-            totalDisplay.innerText = `Total: ₹${total}`;
-        }
-
-        /* ---------- Toggle Cart with 3s loading overlay ---------- */
-        function toggleCart() {
-            const modal = document.getElementById('cart-modal');
-            const loader = document.getElementById('modal-loader');
-            const modalContent = document.getElementById('modal-content');
-
-            if (modal.style.display === 'flex') {
-                modal.classList.remove('active');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                    document.getElementById('checkout-area').style.display = 'none';
-                }, 300);
-            } else {
-                // show modal shell immediately
-                modal.style.display = 'flex';
-                // show loader for 3 seconds then reveal
-                loader.classList.add('active');
-                modal.classList.add('active');
-                // hide checkout area until loaded
-                document.getElementById('checkout-area').style.display = 'none';
-                // small delay so user sees modal shell
-                setTimeout(() => {
-                    updateCartUI();
-                    // persist and show reorder button if prev orders exist
-                    refreshReorderButton();
-                }, 50);
-
-                setTimeout(() => {
-                    loader.classList.remove('active');
-                    // content now accessible
-                }, 3000);
-            }
-        }
-
-        /* ---------- Add to Cart: with flying image animation, haptic, save ---------- */
-        function addToCart(productId, btnElement) {
-            const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) existingItem.quantity += 1;
-            else cart.push({ ...product, quantity: 1 });
-
-            // persist and update UI
-            updateCartUI();
-
-            // button visual feedback
-            const originalText = btnElement.innerText;
-            btnElement.innerText = "✓ Added to Cart";
-            btnElement.style.backgroundColor = "var(--accent)";
-            btnElement.style.color = "#fff";
-            btnElement.classList.add('pressed');
-            setTimeout(() => {
-                btnElement.innerText = originalText;
-                btnElement.style.backgroundColor = "var(--text-main)";
-                btnElement.style.color = "var(--bg-main)";
-                btnElement.classList.remove('pressed');
-            }, 1200);
-
-            // flying mini-cart animation: clone the product's visible image and animate to cart
-            try { animateFlyToCart(productId); } catch (e) {}
-
-            // haptic feedback on mobile
-            if (navigator.vibrate) navigator.vibrate(35);
-        }
-
-        /* ---------- animateFlyToCart: create image clone and animate ---------- */
-        function animateFlyToCart(productId) {
-            // find first img of that product card
-            const img = document.querySelector(`img[data-product-id="${productId}"]`);
-            const cartBtn = document.querySelector('.btn-cart');
-            if (!img || !cartBtn) return;
-
-            const imgRect = img.getBoundingClientRect();
-            const cartRect = cartBtn.getBoundingClientRect();
-
-            const clone = img.cloneNode(true);
-            clone.style.position = 'fixed';
-            clone.style.left = imgRect.left + 'px';
-            clone.style.top = imgRect.top + 'px';
-            clone.style.width = imgRect.width + 'px';
-            clone.style.height = imgRect.height + 'px';
-            clone.style.transition = 'transform 900ms cubic-bezier(.2,.9,.3,1), opacity 900ms';
-            clone.style.zIndex = 5000;
-            clone.style.borderRadius = window.getComputedStyle(img).borderRadius || '8px';
-            document.body.appendChild(clone);
-
-            // compute translate
-            const tx = cartRect.left + cartRect.width/2 - (imgRect.left + imgRect.width/2);
-            const ty = cartRect.top + cartRect.height/2 - (imgRect.top + imgRect.height/2);
-
-            requestAnimationFrame(() => {
-                clone.style.transform = `translate(${tx}px, ${ty}px) scale(0.15) rotate(8deg)`;
-                clone.style.opacity = '0.8';
-            });
-
-            setTimeout(() => {
-                clone.remove();
-            }, 950);
-        }
-
-        /* ---------- Show Checkout: show loader for 3s then populate textarea ---------- */
-        function showCheckout() {
-            const checkoutArea = document.getElementById('checkout-area');
-            const textarea = document.getElementById('order-message');
-            const loader = document.getElementById('modal-loader');
-
-            // show loader
-            loader.classList.add('active');
-            setTimeout(() => {
-                // populate message
-                checkoutArea.style.display = 'block';
-                let message = "Hi Vishwamegh Distributors,\nI would like to place an order for the following items:\n\n";
-                let total = 0;
-                cart.forEach(item => {
-                    message += `▪ ${item.name} (Qty: ${item.quantity}) = ₹${item.price * item.quantity}\n`;
-                    total += item.price * item.quantity;
-                });
-                message += `\nTotal Order Value: *₹${total}*\n\nPlease let me know how to proceed with the payment. Thank you!`;
-                textarea.value = message;
-                loader.classList.remove('active');
-                checkoutArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }, 3000);
-        }
-
-        /* ---------- showToast ---------- */
-        function showToast(message) {
-            const toast = document.getElementById('toast-msg');
-            toast.innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
-        }
-
-        /* ---------- Copy & Clear Cart: save previous order, confetti, open whatsapp ---------- */
-        function copyAndClearCart() {
-            const textarea = document.getElementById('order-message');
-            textarea.select();
-            try { document.execCommand('copy'); } catch(e) {}
-
-            const message = textarea.value;
-            const whatsappUrl = `https://wa.me/918999079379?text=${encodeURIComponent(message)}`;
-            // open whatsapp in new tab
-            window.open(whatsappUrl, '_blank');
-
-            // Save this order to previous orders in localStorage
-            try {
-                const prevRaw = localStorage.getItem(PREV_ORDERS_KEY);
-                const prev = prevRaw ? JSON.parse(prevRaw) : [];
-                const orderSnapshot = {
-                    time: Date.now(),
-                    items: cart.map(i => ({ id:i.id, name:i.name, quantity:i.quantity, price:i.price })),
-                    total: cart.reduce((s,i)=>s+i.price*i.quantity,0),
-                };
-                prev.unshift(orderSnapshot);
-                // keep last 8 orders
-                localStorage.setItem(PREV_ORDERS_KEY, JSON.stringify(prev.slice(0,8)));
-            } catch(e) {}
-
-            // Button UI
-            const btn = document.getElementById('copy-btn');
-            btn.innerText = "✓ Copied Successfully!";
-            btn.style.backgroundColor = "var(--primary)";
-            btn.style.color = "var(--text-main)";
-
-            // Confetti
-            launchConfetti();
-
-            // Clear cart
-            cart = [];
-            updateCartUI();
-
-            showToast("Cart cleared. Order message copied!");
-
-            // hide modal after short delay to keep UX similar to original
-            setTimeout(() => {
-                btn.innerText = "Copy Message & Open WhatsApp";
-                btn.style.backgroundColor = "var(--text-main)";
-                btn.style.color = "var(--bg-main)";
-                updateCartUI();
-                toggleCart();
-            }, 1800);
-        }
-
-        /* ---------- Reorder helper ---------- */
-        function refreshReorderButton() {
-            const reorderBtn = document.getElementById('reorder-btn');
-            try {
-                const raw = localStorage.getItem(PREV_ORDERS_KEY);
-                const prev = raw ? JSON.parse(raw) : [];
-                if (prev && prev.length > 0) {
-                    reorderBtn.style.display = 'inline-block';
-                    reorderBtn.onclick = () => quickReorder(prev[0]); // load latest
-                } else reorderBtn.style.display = 'none';
-            } catch(e) { reorderBtn.style.display = 'none'; }
-        }
-
-        function quickReorder(order) {
-            // Load the saved order items into cart (replacing current cart)
-            cart = [];
-            order.items.forEach(it => {
-                const prod = products.find(p => p.id === it.id);
-                if (prod) cart.push({...prod, quantity: it.quantity});
-            });
-            updateCartUI();
-            // Immediately open checkout area (with loader)
-            showCheckout();
-        }
-
-        /* ---------- Magnifier Lens (spyglass) - improved behavior ---------- */
-        const lens = document.getElementById('img-lens');
-        let lensTargetImg = null;
-        let lensHideTimeout = null;
-
-        function setupMagnifier() {
-            // ensure lens hidden initially
-            lens.style.display = 'none';
-            lens.classList.remove('visible');
-
-            // Use pointer events but only show lens for mouse pointers (so it doesn't stick on touch)
-            document.querySelectorAll('.carousel-container').forEach(container => {
-                // pointermove (supports mouse and stylus). We'll explicitly require pointerType === 'mouse' to show lens.
-                container.addEventListener('pointermove', function(e) {
-                    if (e.pointerType !== 'mouse') return; // only show lens for mouse
-                    const img = this.querySelector('img');
-                    if (!img) return;
-
-                    lensTargetImg = img;
-                    const rect = img.getBoundingClientRect();
-
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    // position lens near cursor, constrained inside viewport
-                    const lensW = lens.offsetWidth || 110;
-                    const lensH = lens.offsetHeight || 110;
-                    let left = e.clientX - lensW/2;
-                    let top = e.clientY - lensH/2;
-
-                    // clamp so lens doesn't go offscreen
-                    left = Math.max(8, Math.min(left, window.innerWidth - lensW - 8));
-                    top = Math.max(8, Math.min(top, window.innerHeight - lensH - 8));
-
-                    lens.style.left = `${left}px`;
-                    lens.style.top = `${top}px`;
-                    lens.style.backgroundImage = `url(${img.src})`;
-
-                    const bgX = (x / rect.width) * 100;
-                    const bgY = (y / rect.height) * 100;
-                    lens.style.backgroundPosition = `${bgX}% ${bgY}%`;
-
-                    // show lens with a quick fade in
-                    lens.style.display = 'block';
-                    lens.classList.add('visible');
-
-                    // clear any previous hide timer, then hide if pointer stops for a short period
-                    if (lensHideTimeout) clearTimeout(lensHideTimeout);
-                    lensHideTimeout = setTimeout(() => {
-                        lens.classList.remove('visible');
-                        setTimeout(()=> { if (!lens.classList.contains('visible')) lens.style.display = 'none'; }, 160);
-                    }, 700);
-                });
-
-                // hide when pointer leaves container
-                container.addEventListener('pointerleave', function() {
-                    lensTargetImg = null;
-                    if (lensHideTimeout) clearTimeout(lensHideTimeout);
-                    lens.classList.remove('visible');
-                    setTimeout(()=> { if (!lens.classList.contains('visible')) lens.style.display = 'none'; }, 160);
-                });
-            });
-
-            // also hide lens on scroll, resize or touchstart to prevent it from getting stuck
-            window.addEventListener('scroll', () => {
-                lensTargetImg = null;
-                if (lensHideTimeout) clearTimeout(lensHideTimeout);
-                lens.classList.remove('visible');
-                setTimeout(()=> { if (!lens.classList.contains('visible')) lens.style.display = 'none'; }, 160);
-            }, { passive: true });
-
-            window.addEventListener('resize', () => {
-                lensTargetImg = null;
-                if (lensHideTimeout) clearTimeout(lensHideTimeout);
-                lens.classList.remove('visible');
-                setTimeout(()=> { if (!lens.classList.contains('visible')) lens.style.display = 'none'; }, 160);
-            });
-
-            window.addEventListener('touchstart', () => {
-                // always hide lens on touch devices
-                lensTargetImg = null;
-                if (lensHideTimeout) clearTimeout(lensHideTimeout);
-                lens.classList.remove('visible');
-                setTimeout(()=> { if (!lens.classList.contains('visible')) lens.style.display = 'none'; }, 160);
-            }, { passive: true });
-        }
-
-        /* ---------- Magnetic Buttons: reduced sensitivity and scoped ---------- */
-        function setupMagnetic() {
-            // only target elements with the .magnetic class
-            const magElements = document.querySelectorAll('.magnetic');
-            // reduced radius and strength so the effect is subtle
-            const MAX_DISTANCE = 100;   // smaller radius
-            const MAX_STRENGTH = 0.09;  // weaker pull
-
-            document.addEventListener('mousemove', (e) => {
-                magElements.forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    const distX = e.clientX - (rect.left + rect.width/2);
-                    const distY = e.clientY - (rect.top + rect.height/2);
-                    const dist = Math.hypot(distX, distY);
-                    if (dist < MAX_DISTANCE) {
-                        const strength = (1 - dist / MAX_DISTANCE) * MAX_STRENGTH;
-                        const tx = distX * strength;
-                        const ty = distY * strength;
-                        el.style.transform = `translate(${tx}px, ${ty}px)`;
-                    } else {
-                        // reset transform when out of radius
-                        el.style.transform = '';
+        /**
+         * Main JavaScript for Devaki Paithani E-commerce Website
+         * Fully functional cart, sorting, checkout & WhatsApp integration
+         * Premium Tailwind + custom animations
+         */
+        
+        // Tailwind script initialization
+        function initializeTailwind() {
+            return {
+                config(userConfig = {}) {
+                    return {
+                        configUser: userConfig,
+                        theme: {
+                            extend: {
+                                fontFamily: {
+                                    serif: ['Playfair Display', 'serif']
+                                }
+                            }
+                        }
                     }
-                });
-            });
-
-            // reset transforms when leaving window to avoid stuck state
-            document.addEventListener('mouseleave', () => {
-                magElements.forEach(el => el.style.transform = '');
-            });
-        }
-
-        /* ---------- Smooth page transitions using IntersectionObserver ---------- */
-        let fadeObserver = null;
-        function setupFadeObserver() {
-            const fadeTargets = document.querySelectorAll('.fade-target, section');
-            if (fadeObserver) fadeObserver.disconnect();
-            fadeObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('in-view');
-                });
-            }, { threshold: 0.12 });
-            fadeTargets.forEach(t => fadeObserver.observe(t));
-        }
-
-        /* ---------- Confetti (gold) ---------- */
-        function launchConfetti() {
-            const canvas = document.getElementById('confetti-canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            canvas.style.display = 'block';
-            const ctx = canvas.getContext('2d');
-            const pieces = [];
-            const num = 60;
-            for (let i=0;i<num;i++) {
-                pieces.push({
-                    x: Math.random()*canvas.width,
-                    y: Math.random()*canvas.height - canvas.height * 0.2,
-                    vx: (Math.random()-0.5)*6,
-                    vy: Math.random()*6+2,
-                    size: Math.random()*8+4,
-                    rot: Math.random()*360,
-                    vr: (Math.random()-0.5)*8,
-                    color: randomGold()
-                });
+                },
+                theme: {
+                    extend: {},
+                },
             }
-            let frames = 0;
-            function frame() {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                pieces.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.vy += 0.15; // gravity
-                    p.rot += p.vr;
-                    ctx.save();
-                    ctx.translate(p.x,p.y);
-                    ctx.rotate(p.rot * Math.PI / 180);
-                    ctx.fillStyle = p.color;
-                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
-                    ctx.restore();
-                });
-                frames++;
-                if (frames < 120) requestAnimationFrame(frame);
-                else { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.style.display='none'; }
-            }
-            frame();
         }
-
-        function randomGold() {
-            const golds = ['#D4AF37','#C9A46C','#FFC857','#E6B800'];
-            return golds[Math.floor(Math.random()*golds.length)];
+        
+        // Products data - exactly as requested
+        const PRODUCTS = [
+            {
+                id: 1,
+                name: "Soft Silk Kalanjali Paithani (Green Forest)",
+                price: 1950,
+                img: "1.jpeg"
+            },
+            {
+                id: 2,
+                name: "Soft Silk Kalanjali Paithani (Reddish)",
+                price: 1950,
+                img: "2.jpeg"
+            },
+            {
+                id: 3,
+                name: "Soft Silk Kalanjali Paithani (Blue)",
+                price: 1950,
+                img: "3.jpeg"
+            },
+            {
+                id: 4,
+                name: "Soft Silk Kalanjali Paithani (Purple)",
+                price: 1950,
+                img: "4.jpeg"
+            }
+        ]
+        
+        // Cart state
+        let cart = []
+        
+        // Render products grid
+        function renderProducts(filteredProducts) {
+            const container = document.getElementById('products-grid')
+            container.innerHTML = ''
+            
+            filteredProducts.forEach(product => {
+                const cardHTML = `
+                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-xl border border-[#9f1239]/10">
+                    <div class="relative">
+                        <img src="${product.img}" 
+                             alt="${product.name}"
+                             class="w-full aspect-[4/5] object-cover">
+                        <div class="absolute top-4 right-4 bg-white text-[#9f1239] text-xs font-bold px-4 py-1 rounded-3xl shadow-md">
+                            ₹${product.price}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-[#3f2a1e] text-lg leading-tight mb-3 line-clamp-2">${product.name}</h3>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-x-1 text-[#9f1239]">
+                                <span class="text-2xl">₹</span>
+                                <span class="text-3xl font-semibold">${product.price}</span>
+                            </div>
+                            
+                            <button onclick="addToCart(${product.id}); event.stopImmediatePropagation()" 
+                                    class="add-to-cart-btn flex items-center justify-center bg-[#9f1239] hover:bg-[#7f0f2e] text-white text-sm font-semibold px-7 py-4 rounded-2xl shadow-md">
+                                <span class="button-text">ADD TO CART</span>
+                                <span class="loading-spinner hidden ml-3 w-4 h-4 border-2 border-white border-t-transparent rounded-full spinner"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>`
+                
+                container.innerHTML += cardHTML
+            })
+            
+            // If no products (should never happen)
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `<p class="col-span-full text-center py-12 text-[#9f1239]">No products found.</p>`
+            }
         }
-
-        /* ---------- Button press effect for touch devices ---------- */
-        document.addEventListener('pointerdown', (e) => {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                const btn = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
-                btn.classList.add('pressed');
+        
+        // Add to cart with 3-second loading animation
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId)
+            if (!product) return
+            
+            // Find the clicked button
+            const buttons = document.querySelectorAll('.add-to-cart-btn')
+            let targetBtn = null
+            
+            for (let btn of buttons) {
+                if (btn.getAttribute('onclick').includes(productId.toString())) {
+                    targetBtn = btn
+                    break
+                }
             }
-        });
-        document.addEventListener('pointerup', (e) => {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                const btn = e.target.tagName === 'BUTTON' ? e.target : e.target.closest('button');
-                setTimeout(()=>btn.classList.remove('pressed'), 120);
+            
+            if (targetBtn) {
+                const textSpan = targetBtn.querySelector('.button-text')
+                const spinner = targetBtn.querySelector('.loading-spinner')
+                
+                // Disable and show spinner
+                targetBtn.disabled = true
+                textSpan.classList.add('hidden')
+                spinner.classList.remove('hidden')
+                
+                // 3-second loading
+                setTimeout(() => {
+                    // Add to cart
+                    const existing = cart.find(item => item.id === product.id)
+                    
+                    if (existing) {
+                        existing.quantity += 1
+                    } else {
+                        cart.push({
+                            ...product,
+                            quantity: 1
+                        })
+                    }
+                    
+                    // Reset button
+                    targetBtn.disabled = false
+                    textSpan.classList.remove('hidden')
+                    spinner.classList.add('hidden')
+                    
+                    // Update cart UI
+                    updateCartUI()
+                    
+                    // Show toast
+                    showToast(`${product.name} added to cart`)
+                    
+                    // Optional: open cart automatically after first item
+                    if (cart.length === 1) {
+                        setTimeout(() => {
+                            toggleCart()
+                        }, 800)
+                    }
+                }, 3000)
             }
-        });
-
-        /* ---------- Init ---------- */
+        }
+        
+        // Update entire cart UI
+        function updateCartUI() {
+            const container = document.getElementById('cart-items')
+            const totalEl = document.getElementById('cart-total')
+            const badge = document.getElementById('cart-count-badge')
+            
+            // Calculate total
+            let total = 0
+            cart.forEach(item => {
+                total += item.price * item.quantity
+            })
+            totalEl.textContent = `₹${total}`
+            
+            // Update badge
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
+            badge.textContent = totalItems
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                <div class="text-center py-12 text-[#9f1239]/40">
+                    <p class="text-6xl mb-3">🛍️</p>
+                    <p class="font-medium">Your cart is empty</p>
+                    <p class="text-sm mt-2">Add some beautiful Paithani sarees</p>
+                </div>`
+                return
+            }
+            
+            let html = ''
+            
+            cart.forEach((item, index) => {
+                html += `
+                <div class="flex gap-4 border-b pb-6">
+                    <img src="${item.img}" class="w-20 h-20 object-cover rounded-2xl" alt="">
+                    <div class="flex-1">
+                        <p class="font-medium text-[#3f2a1e]">${item.name}</p>
+                        <p class="text-[#9f1239] text-xl mt-1">₹${item.price} × ${item.quantity}</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <div class="flex items-center border rounded-2xl">
+                                <button onclick="changeQuantity(${index}, -1)" class="px-4 py-1 text-xl font-semibold">-</button>
+                                <span class="px-4 font-medium">${item.quantity}</span>
+                                <button onclick="changeQuantity(${index}, 1)" class="px-4 py-1 text-xl font-semibold">+</button>
+                            </div>
+                            <button onclick="removeFromCart(${index})" class="text-red-500 text-sm flex items-center gap-x-1">
+                                <span>🗑️</span> REMOVE
+                            </button>
+                        </div>
+                    </div>
+                </div>`
+            })
+            
+            container.innerHTML = html
+        }
+        
+        // Change quantity in cart
+        function changeQuantity(index, delta) {
+            const item = cart[index]
+            if (!item) return
+            
+            item.quantity += delta
+            
+            if (item.quantity < 1) {
+                cart.splice(index, 1)
+            }
+            
+            updateCartUI()
+        }
+        
+        // Remove item
+        function removeFromCart(index) {
+            cart.splice(index, 1)
+            updateCartUI()
+        }
+        
+        // Toggle cart drawer
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer')
+            const backdrop = document.getElementById('cart-backdrop')
+            
+            if (drawer.classList.contains('hidden')) {
+                backdrop.classList.remove('hidden')
+                drawer.classList.remove('hidden')
+                updateCartUI()
+            } else {
+                drawer.classList.add('hidden')
+                backdrop.classList.add('hidden')
+            }
+        }
+        
+        // Proceed to checkout (3-second loading)
+        function proceedToCheckout() {
+            const btn = document.getElementById('checkout-btn')
+            const originalText = btn.innerHTML
+            
+            btn.innerHTML = `
+                <span class="loading-spinner w-5 h-5 border-2 border-white border-t-transparent rounded-full spinner mr-3"></span>
+                PROCESSING...
+            `
+            btn.disabled = true
+            
+            setTimeout(() => {
+                // Show checkout modal
+                showCheckoutModal()
+                // Reset button & close cart
+                btn.innerHTML = originalText
+                btn.disabled = false
+                toggleCart()
+            }, 3000)
+        }
+        
+        // Show checkout modal
+        function showCheckoutModal() {
+            const modal = document.getElementById('checkout-modal')
+            const content = document.getElementById('checkout-content')
+            
+            let subtotal = 0
+            let itemsHTML = `
+            <div class="space-y-6">`
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity
+                subtotal += itemTotal
+                
+                itemsHTML += `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-medium">${item.name}</p>
+                        <p class="text-xs text-[#9f1239]/70">Qty: ${item.quantity}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xl font-semibold">₹${itemTotal}</p>
+                    </div>
+                </div>`
+            })
+            
+            itemsHTML += `</div>`
+            
+            content.innerHTML = `
+            ${itemsHTML}
+            <div class="border-t pt-6 flex justify-between text-xl">
+                <span class="font-semibold">Total Amount</span>
+                <span class="font-bold text-[#9f1239]">₹${subtotal}</span>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-xs flex gap-x-4 items-center">
+                <span class="text-4xl">📦</span>
+                <div>
+                    <p class="font-medium">Delivery in 3-5 days</p>
+                    <p class="text-[#3f2a1e]/70">COD available across India • Free shipping over ₹5000</p>
+                </div>
+            </div>`
+            
+            modal.classList.remove('hidden')
+            modal.classList.add('flex')
+        }
+        
+        function hideCheckout() {
+            const modal = document.getElementById('checkout-modal')
+            modal.classList.add('hidden')
+            modal.classList.remove('flex')
+            cart = [] // Clear cart after checkout as per typical flow
+            updateCartUI()
+        }
+        
+        // WhatsApp integration
+        function handleWhatsAppCheckout() {
+            let message = `🌺 *Hello Devaki Paithani!*\n\nI would like to order the following Paithani sarees:\n\n`
+            
+            let total = 0
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity
+                total += itemTotal
+                message += `• ${item.name}\n   ₹${item.price} × ${item.quantity} = ₹${itemTotal}\n\n`
+            })
+            
+            message += `──────────────────\n*Total: ₹${total}*\n\nPlease confirm availability and share payment details.\nThank you! 🙏`
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(message).then(() => {
+                // Open WhatsApp with pre-filled text
+                const phone = '918446918749'
+                const encoded = encodeURIComponent(message)
+                const whatsappURL = `https://wa.me/${phone}?text=${encoded}`
+                
+                window.open(whatsappURL, '_blank')
+                
+                // Show toast
+                showToast('Message copied & WhatsApp opened!')
+                
+                // Close modal
+                hideCheckout()
+            })
+        }
+        
+        // Simple toast
+        function showToast(text) {
+            const toast = document.getElementById('toast')
+            const toastText = document.getElementById('toast-text')
+            toastText.textContent = text
+            toast.style.display = 'flex'
+            
+            setTimeout(() => {
+                toast.style.display = 'none'
+            }, 2800)
+        }
+        
+        // Sorting function (price-wise as requested)
+        function sortProducts() {
+            const select = document.getElementById('sort-select').value
+            let sorted = [...PRODUCTS]
+            
+            if (select === 'price-asc') {
+                sorted.sort((a, b) => a.price - b.price)
+            } else if (select === 'price-desc') {
+                sorted.sort((a, b) => b.price - a.price)
+            } else if (select === 'name') {
+                sorted.sort((a, b) => a.name.localeCompare(b.name))
+            }
+            
+            renderProducts(sorted)
+        }
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu')
+            menu.classList.toggle('hidden')
+            
+            // Rotate hamburger icon
+            const icon = document.getElementById('hamburger-icon')
+            if (!menu.classList.contains('hidden')) {
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6h12v12" />`
+            } else {
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />`
+            }
+        }
+        
+        // Smooth section navigation
+        function navigateToSection(section) {
+            if (section === 'home') {
+                document.getElementById('home').scrollIntoView({ behavior: 'smooth' })
+            } else if (section === 'shop') {
+                document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })
+            }
+        }
+        
+        // Initialize everything
         function init() {
-            loadPersistedCart();
-            renderProducts();
-            updateCartUI();
-            setupMagnetic();
-            setupFadeObserver();
-            refreshReorderButton();
-
-            // Parallax scroll for offers title
-            const parallaxTitle = document.getElementById('parallax-title');
-            window.addEventListener('scroll', () => {
-                const sc = window.scrollY;
-                // translate slower (parallax)
-                parallaxTitle.style.transform = `translateY(${sc * 0.12}px)`;
-            });
-
-            // Rehydrate UI for cart count pop (in case persisted)
-            const countEl = document.getElementById('cart-count');
-            void countEl.offsetWidth;
-
-            // close modal on background click (keeps original behavior)
-            document.getElementById('cart-modal').addEventListener('click', function(e) {
-                if (e.target === this) toggleCart();
-            });
-
-            // ensure window resize updates confetti canvas sizing next time
-            window.addEventListener('resize', () => {
-                const c = document.getElementById('confetti-canvas');
-                c.width = window.innerWidth; c.height = window.innerHeight;
-            });
-
-            // set up magnifier after DOM ready
-            setupMagnifier();
+            initializeTailwind()
+            renderProducts(PRODUCTS) // Initial render (all products)
+            
+            // Keyboard shortcut for cart (optional luxury touch)
+            document.addEventListener('keydown', function(e) {
+                if (e.metaKey && e.which === 75) { // CMD + K
+                    e.preventDefault()
+                    toggleCart()
+                }
+            })
+            
+            console.log('', 'background:#9f1239;color:#fff;padding:2px 6px;border-radius:4px')
         }
-
-        // Kick off
-        init();
+        
+        // Boot the website
+        window.onload = init
     </script>
 </body>
 </html>
