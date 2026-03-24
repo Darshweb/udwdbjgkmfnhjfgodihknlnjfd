@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Devaki Paithani - Premium Paithani & Silk Sarees Manufacturer & Wholesaler">
+    <meta name="description" content="Devaki Paithani">
     <title>Devaki Paithani | Timeless Elegance in Every Saree</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@400;500&amp;display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500&display=swap');
         
         :root {
             --primary: #9f1239;
@@ -81,32 +81,27 @@
     </style>
 </head>
 <body class="tailwind-ready font-sans bg-[#fffaf0]">
-    <!-- HEADER / NAVBAR -->
     <header class="bg-white border-b-2 border-[#9f1239]/10 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center justify-between px-6 py-5">
                 
-                <!-- Logo -->
                 <div class="flex items-center gap-x-3">
                     <img src="logo.jpg" alt="Devaki Paithani Logo" class="h-14 w-auto logo-glow">
                     <div>
-                        <h1 class="text-3xl font-bold tracking-[-1px] text-[#9f1239] section-header">Devaki</h1>
+                        <h1 class="text-3xl font-bold tracking-[-1px] text-[#9f1239] section-header">Devaki Paithani</h1>
                         <p class="text-xs font-medium text-[#9f1239]/80 -mt-1">Paithani &amp; Silk Sarees</p>
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-                    <a href="#" onclick="navigateToSection('home')" class="nav-link text-[#3f2a1e]">HOME</a>
-                    <a href="#" onclick="navigateToSection('shop')" class="nav-link text-[#3f2a1e]">SHOP COLLECTION</a>
-                    <a href="#" class="nav-link text-[#3f2a1e]">OUR STORY</a>
-                    <a href="#" class="nav-link text-[#3f2a1e]">WHOLESALE</a>
-                    <a href="#" class="nav-link text-[#3f2a1e]">CONTACT</a>
+                    <a href="javascript:void(0)" onclick="navigateToSection('home')" class="nav-link text-[#3f2a1e]">HOME</a>
+                    <a href="javascript:void(0)" onclick="navigateToSection('shop')" class="nav-link text-[#3f2a1e]">SHOP COLLECTION</a>
+                    <a href="javascript:void(0)" class="nav-link text-[#3f2a1e]">OUR STORY</a>
+                    <a href="javascript:void(0)" class="nav-link text-[#3f2a1e]">WHOLESALE</a>
+                    <a href="javascript:void(0)" class="nav-link text-[#3f2a1e]">CONTACT</a>
                 </nav>
 
-                <!-- Right side -->
                 <div class="flex items-center gap-x-6">
-                    <!-- Cart Icon -->
                     <button onclick="toggleCart()" class="flex items-center gap-x-2 relative group">
                         <div class="relative">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#3f2a1e] group-hover:text-[#9f1239]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,7 +112,6 @@
                         <span class="hidden sm:block text-sm font-medium text-[#3f2a1e]">Cart</span>
                     </button>
 
-                    <!-- Mobile Hamburger -->
                     <button onclick="toggleMobileMenu()" class="md:hidden text-[#3f2a1e]">
                         <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -126,20 +120,18 @@
                 </div>
             </div>
             
-            <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-6 py-4">
                 <div class="flex flex-col gap-y-4 text-sm font-medium">
-                    <a href="#" onclick="navigateToSection('home');toggleMobileMenu()" class="py-2 text-[#3f2a1e]">HOME</a>
-                    <a href="#" onclick="navigateToSection('shop');toggleMobileMenu()" class="py-2 text-[#3f2a1e]">SHOP COLLECTION</a>
-                    <a href="#" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">OUR STORY</a>
-                    <a href="#" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">WHOLESALE</a>
-                    <a href="#" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">CONTACT</a>
+                    <a href="javascript:void(0)" onclick="navigateToSection('home');toggleMobileMenu()" class="py-2 text-[#3f2a1e]">HOME</a>
+                    <a href="javascript:void(0)" onclick="navigateToSection('shop');toggleMobileMenu()" class="py-2 text-[#3f2a1e]">SHOP COLLECTION</a>
+                    <a href="javascript:void(0)" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">OUR STORY</a>
+                    <a href="javascript:void(0)" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">WHOLESALE</a>
+                    <a href="javascript:void(0)" onclick="toggleMobileMenu()" class="py-2 text-[#3f2a1e]">CONTACT</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
     <section id="home" class="hero-bg py-16 md:py-24 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
             <div class="space-y-8">
@@ -169,9 +161,9 @@
                         </svg>
                     </button>
                     
-                    <a href="https://wa.me/918446918749" target="_blank"
+                    <a href="https://wa.me/918446918749" target="_blank" rel="noopener noreferrer"
                        class="border-2 border-[#9f1239] text-[#9f1239] hover:bg-[#9f1239] hover:text-white px-8 py-5 rounded-2xl font-semibold flex items-center gap-x-2">
-                        <span>Contact US</span>
+                        <span>WHATSAPP US</span>
                         <span class="text-2xl">💬</span>
                     </a>
                 </div>
@@ -185,11 +177,10 @@
                         </div>
                     </div>
                     <div class="h-9 w-px bg-[#9f1239]/20"></div>
-                    <p class="text-[#3f2a1e]/80">Free Shipping • 100% Handloom Guaranteed</p>
+                    <p class="text-[#3f2a1e]/80">Shipping • COD Available • 100% Handloom Guaranteed</p>
                 </div>
             </div>
             
-            <!-- Hero visual -->
             <div class="relative flex justify-center">
                 <div class="absolute -top-8 -right-8 bg-white rounded-3xl shadow-2xl p-3 rotate-12 hidden lg:block">
                     <img src="3.jpeg" alt="Blue Paithani" class="w-52 h-52 object-cover rounded-2xl">
@@ -203,7 +194,6 @@
             </div>
         </div>
         
-        <!-- Trust bar -->
         <div class="mt-16 border-t border-[#9f1239]/10 bg-white/70 py-5">
             <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between items-center gap-8 text-xs uppercase font-medium text-[#3f2a1e]/70">
                 <div class="flex items-center gap-x-2"><span class="text-xl">🧵</span> Handwoven in Paithan</div>
@@ -215,7 +205,6 @@
         </div>
     </section>
 
-    <!-- SHOP SECTION -->
     <section id="shop" class="max-w-7xl mx-auto px-6 py-16">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <div>
@@ -223,7 +212,6 @@
                 <h2 class="text-4xl section-header text-[#3f2a1e]">Soft Silk Kalanjali Paithani</h2>
             </div>
             
-            <!-- Sorting -->
             <div class="flex items-center gap-x-3">
                 <label class="text-sm font-medium text-[#3f2a1e]">Sort by:</label>
                 <select id="sort-select" onchange="sortProducts()" 
@@ -235,13 +223,10 @@
             </div>
         </div>
 
-        <!-- Products Grid -->
         <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <!-- Populated by JavaScript -->
-        </div>
+            </div>
     </section>
 
-    <!-- CART DRAWER -->
     <div onclick="if(event.target.id === 'cart-backdrop')toggleCart()" 
          id="cart-backdrop"
          class="hidden fixed inset-0 bg-black/60 z-[9999] backdrop-blur-sm">
@@ -256,7 +241,6 @@
         </div>
         
         <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-4 space-y-6">
-            <!-- Populated by JS -->
             <div class="text-center py-12 text-[#9f1239]/40">
                 <p class="text-6xl mb-3">🛍️</p>
                 <p class="font-medium">Your cart is empty</p>
@@ -272,7 +256,7 @@
             
             <button onclick="proceedToCheckout()" 
                     id="checkout-btn"
-                    class="w-full bg-[#9f1239] hover:bg-[#7f0f2e] text-white py-6 rounded-3xl font-semibold text-lg flex items-center justify-center gap-x-3">
+                    class="w-full bg-[#9f1239] hover:bg-[#7f0f2e] text-white py-6 rounded-3xl font-semibold text-lg flex items-center justify-center gap-x-3 transition-opacity">
                 PROCEED TO CHECKOUT
             </button>
             
@@ -280,26 +264,24 @@
         </div>
     </div>
 
-    <!-- CHECKOUT MODAL -->
     <div onclick="if(event.target.id === 'checkout-modal')hideCheckout()" 
          id="checkout-modal"
          class="hidden fixed inset-0 bg-black/70 z-[11000] flex items-center justify-center">
         
         <div onclick="event.stopImmediatePropagation()" 
-             class="bg-white rounded-3xl max-w-lg w-full mx-4 overflow-hidden">
+             class="bg-white rounded-3xl max-w-lg w-full mx-4 overflow-hidden flex flex-col max-h-[90vh]">
             
-            <div class="px-8 pt-8 pb-4 border-b">
+            <div class="px-8 pt-8 pb-4 border-b flex-shrink-0">
                 <div class="flex justify-between">
                     <h3 class="text-3xl section-header">Checkout Summary</h3>
                     <button onclick="hideCheckout()" class="text-4xl text-[#9f1239]">×</button>
                 </div>
             </div>
             
-            <div id="checkout-content" class="px-8 py-8 space-y-6">
-                <!-- Filled by JS -->
-            </div>
+            <div id="checkout-content" class="px-8 py-8 space-y-6 overflow-y-auto flex-1">
+                </div>
             
-            <div class="px-8 py-8 bg-[#fffaf0] flex flex-col gap-y-4">
+            <div class="px-8 py-8 bg-[#fffaf0] flex flex-col gap-y-4 flex-shrink-0 border-t">
                 <button onclick="handleWhatsAppCheckout()" 
                         class="flex items-center justify-center gap-x-3 bg-[#25D366] hover:bg-[#20c55e] text-white py-6 rounded-3xl font-semibold text-lg shadow-inner">
                     <span class="text-3xl">💬</span>
@@ -317,18 +299,16 @@
         </div>
     </div>
 
-    <!-- SUCCESS TOAST -->
     <div id="toast" onclick="this.classList.add('hidden')" 
          class="hidden fixed bottom-6 right-6 bg-[#3f2a1e] text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-x-3 z-[99999]">
         <span id="toast-text" class="font-medium"></span>
     </div>
 
-    <!-- FOOTER -->
     <footer class="bg-[#3f2a1e] text-[#f8e8d8] py-16">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-y-10">
             <div>
                 <img src="logo.jpg" alt="Devaki Paithani" class="h-12 mb-4 brightness-110">
-                <p class="text-sm max-w-xs">Manufacturer &amp; Wholesaler of authentic Paithani &amp; . Proudly made in Paithan, Maharashtra.</p>
+                <p class="text-sm max-w-xs">Manufacturer &amp; Wholesaler of authentic Paithani. Proudly made in Paithan, Maharashtra.</p>
                 <p class="mt-8 text-xs">📍 Yeola, Maharashtra</p>
             </div>
             
@@ -359,7 +339,7 @@
                 <p class="mt-8 text-xs flex justify-end items-center gap-x-4">
                     MADE IN INDIA 🇮🇳 
                     <span class="text-[#9f1239]">✺</span> 
-                    PURE sARI
+                    PURE SARI
                 </p>
             </div>
         </div>
@@ -372,24 +352,17 @@
          * Premium Tailwind + custom animations
          */
         
-        // Tailwind script initialization
+        // Fixed Tailwind Script Initialization to actually apply settings
         function initializeTailwind() {
-            return {
-                config(userConfig = {}) {
-                    return {
-                        configUser: userConfig,
-                        theme: {
-                            extend: {
-                                fontFamily: {
-                                    serif: ['Playfair Display', 'serif']
-                                }
-                            }
+            window.tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            serif: ['Playfair Display', 'serif'],
+                            sans: ['Inter', 'sans-serif']
                         }
                     }
-                },
-                theme: {
-                    extend: {},
-                },
+                }
             }
         }
         
@@ -460,7 +433,6 @@
                 container.innerHTML += cardHTML
             })
             
-            // If no products (should never happen)
             if (filteredProducts.length === 0) {
                 container.innerHTML = `<p class="col-span-full text-center py-12 text-[#9f1239]">No products found.</p>`
             }
@@ -471,7 +443,6 @@
             const product = PRODUCTS.find(p => p.id === productId)
             if (!product) return
             
-            // Find the clicked button
             const buttons = document.querySelectorAll('.add-to-cart-btn')
             let targetBtn = null
             
@@ -486,14 +457,11 @@
                 const textSpan = targetBtn.querySelector('.button-text')
                 const spinner = targetBtn.querySelector('.loading-spinner')
                 
-                // Disable and show spinner
                 targetBtn.disabled = true
                 textSpan.classList.add('hidden')
                 spinner.classList.remove('hidden')
                 
-                // 3-second loading
                 setTimeout(() => {
-                    // Add to cart
                     const existing = cart.find(item => item.id === product.id)
                     
                     if (existing) {
@@ -505,18 +473,13 @@
                         })
                     }
                     
-                    // Reset button
                     targetBtn.disabled = false
                     textSpan.classList.remove('hidden')
                     spinner.classList.add('hidden')
                     
-                    // Update cart UI
                     updateCartUI()
-                    
-                    // Show toast
                     showToast(`${product.name} added to cart`)
                     
-                    // Optional: open cart automatically after first item
                     if (cart.length === 1) {
                         setTimeout(() => {
                             toggleCart()
@@ -531,6 +494,7 @@
             const container = document.getElementById('cart-items')
             const totalEl = document.getElementById('cart-total')
             const badge = document.getElementById('cart-count-badge')
+            const checkoutBtn = document.getElementById('checkout-btn')
             
             // Calculate total
             let total = 0
@@ -543,7 +507,11 @@
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
             badge.textContent = totalItems
             
+            // Empty state handling
             if (cart.length === 0) {
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                
                 container.innerHTML = `
                 <div class="text-center py-12 text-[#9f1239]/40">
                     <p class="text-6xl mb-3">🛍️</p>
@@ -553,8 +521,10 @@
                 return
             }
             
-            let html = ''
+            checkoutBtn.disabled = false;
+            checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             
+            let html = ''
             cart.forEach((item, index) => {
                 html += `
                 <div class="flex gap-4 border-b pb-6">
@@ -579,7 +549,6 @@
             container.innerHTML = html
         }
         
-        // Change quantity in cart
         function changeQuantity(index, delta) {
             const item = cart[index]
             if (!item) return
@@ -593,13 +562,11 @@
             updateCartUI()
         }
         
-        // Remove item
         function removeFromCart(index) {
             cart.splice(index, 1)
             updateCartUI()
         }
         
-        // Toggle cart drawer
         function toggleCart() {
             const drawer = document.getElementById('cart-drawer')
             const backdrop = document.getElementById('cart-backdrop')
@@ -616,6 +583,8 @@
         
         // Proceed to checkout (3-second loading)
         function proceedToCheckout() {
+            if (cart.length === 0) return; // Prevent proceeding if cart is empty
+            
             const btn = document.getElementById('checkout-btn')
             const originalText = btn.innerHTML
             
@@ -626,23 +595,19 @@
             btn.disabled = true
             
             setTimeout(() => {
-                // Show checkout modal
                 showCheckoutModal()
-                // Reset button & close cart
                 btn.innerHTML = originalText
                 btn.disabled = false
                 toggleCart()
             }, 3000)
         }
         
-        // Show checkout modal
         function showCheckoutModal() {
             const modal = document.getElementById('checkout-modal')
             const content = document.getElementById('checkout-content')
             
             let subtotal = 0
-            let itemsHTML = `
-            <div class="space-y-6">`
+            let itemsHTML = `<div class="space-y-6">`
             
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity
@@ -664,11 +629,11 @@
             
             content.innerHTML = `
             ${itemsHTML}
-            <div class="border-t pt-6 flex justify-between text-xl">
+            <div class="border-t pt-6 flex justify-between text-xl mt-6">
                 <span class="font-semibold">Total Amount</span>
                 <span class="font-bold text-[#9f1239]">₹${subtotal}</span>
             </div>
-            <div class="bg-white rounded-2xl p-4 text-xs flex gap-x-4 items-center">
+            <div class="bg-white rounded-2xl p-4 text-xs flex gap-x-4 items-center mt-4">
                 <span class="text-4xl">📦</span>
                 <div>
                     <p class="font-medium">Delivery in 3-5 days</p>
@@ -684,11 +649,10 @@
             const modal = document.getElementById('checkout-modal')
             modal.classList.add('hidden')
             modal.classList.remove('flex')
-            cart = [] // Clear cart after checkout as per typical flow
+            cart = [] 
             updateCartUI()
         }
         
-        // WhatsApp integration
         function handleWhatsAppCheckout() {
             let message = `🌺 *Hello Devaki Paithani!*\n\nI would like to order the following Paithani sarees:\n\n`
             
@@ -702,24 +666,17 @@
             
             message += `──────────────────\n*Total: ₹${total}*\n\nPlease confirm availability and share payment details.\nThank you! 🙏`
             
-            // Copy to clipboard
             navigator.clipboard.writeText(message).then(() => {
-                // Open WhatsApp with pre-filled text
                 const phone = '918446918749'
                 const encoded = encodeURIComponent(message)
                 const whatsappURL = `https://wa.me/${phone}?text=${encoded}`
                 
                 window.open(whatsappURL, '_blank')
-                
-                // Show toast
                 showToast('Message copied & WhatsApp opened!')
-                
-                // Close modal
                 hideCheckout()
             })
         }
         
-        // Simple toast
         function showToast(text) {
             const toast = document.getElementById('toast')
             const toastText = document.getElementById('toast-text')
@@ -731,7 +688,6 @@
             }, 2800)
         }
         
-        // Sorting function (price-wise as requested)
         function sortProducts() {
             const select = document.getElementById('sort-select').value
             let sorted = [...PRODUCTS]
@@ -747,12 +703,10 @@
             renderProducts(sorted)
         }
         
-        // Mobile menu toggle
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu')
             menu.classList.toggle('hidden')
             
-            // Rotate hamburger icon
             const icon = document.getElementById('hamburger-icon')
             if (!menu.classList.contains('hidden')) {
                 icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6h12v12" />`
@@ -761,7 +715,6 @@
             }
         }
         
-        // Smooth section navigation
         function navigateToSection(section) {
             if (section === 'home') {
                 document.getElementById('home').scrollIntoView({ behavior: 'smooth' })
@@ -770,14 +723,12 @@
             }
         }
         
-        // Initialize everything
         function init() {
             initializeTailwind()
-            renderProducts(PRODUCTS) // Initial render (all products)
+            renderProducts(PRODUCTS) 
             
-            // Keyboard shortcut for cart (optional luxury touch)
             document.addEventListener('keydown', function(e) {
-                if (e.metaKey && e.which === 75) { // CMD + K
+                if (e.metaKey && e.which === 75) { 
                     e.preventDefault()
                     toggleCart()
                 }
@@ -786,7 +737,6 @@
             console.log('', 'background:#9f1239;color:#fff;padding:2px 6px;border-radius:4px')
         }
         
-        // Boot the website
         window.onload = init
     </script>
 </body>
